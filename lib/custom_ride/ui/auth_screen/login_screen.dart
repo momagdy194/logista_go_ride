@@ -14,6 +14,7 @@ import 'package:customer/custom_ride/ui/dashboard_screen.dart';
 import 'package:customer/custom_ride/ui/terms_and_condition/terms_and_condition_screen.dart';
 import 'package:customer/custom_ride/utils/DarkThemeProvider.dart';
 import 'package:customer/custom_ride/utils/fire_store_utils.dart';
+import 'package:customer/equipment/controller/auth_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -157,6 +158,8 @@ Expanded(
                                     FireStoreUtils.userExitOrNot(value.user!.uid).then((userExit) async {
                                       ShowToastDialog.closeLoader();
                                       if (userExit == true) {
+
+
                                         UserModel? userModel = await FireStoreUtils.getUserProfile(value.user!.uid);
                                         if (userModel != null) {
                                           if (userModel.isActive == true) {
@@ -220,7 +223,23 @@ Expanded(
                                             UserModel? userModel = await FireStoreUtils.getUserProfile(value.user!.uid);
                                             if (userModel != null) {
                                               if (userModel.isActive == true) {
+                                                await Get.find<EQAuthController>().login(
+                                                    "${userModel.countryCode}${userModel.phoneNumber}",
+                                                 "${ userModel.phoneNumber}"
+                                                    // SignUpBody(email:"${userModel.email}",password:userModel.phoneNumber,fName: userModel.fullName,lName: "." ,phone:"${userModel.countryCode}${userModel.phoneNumber}"  )
+                                          ).then((value) {
+                                                  Get.find<EQAuthController>()
+                                                      .saveUserNumberAndPassword(
+                                                      "${userModel.countryCode}${userModel.phoneNumber}",
+                                                      "${userModel.phoneNumber}",
+                                                      "${userModel.countryCode}");
+                                                });
+
                                                 Get.offAll( DashBoardScreen());
+
+
+
+
                                               } else {
                                                 await FirebaseAuth.instance.signOut();
                                                 ShowToastDialog.showToast("This user is disable please contact administrator".tr);

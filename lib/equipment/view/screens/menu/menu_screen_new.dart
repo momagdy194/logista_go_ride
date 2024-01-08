@@ -404,61 +404,61 @@ class _MenuScreenNewState extends State<MenuScreenNew> {
                     ]),
                   )
                 ]),
-                InkWell(
-                  onTap: () {
-                    if (Get.find<EQAuthController>().isLoggedIn()) {
-                      Get.dialog(
-                          ConfirmationDialog(
-                              icon: Images.support,
-                              description: 'are_you_sure_to_logout'.tr,
-                              isLogOut: true,
-                              onYesPressed: () {
-                                Get.find<EQAuthController>().clearSharedData();
-                                Get.find<EQAuthController>().socialLogout();
-                                Get.find<EQCartController>().clearCartList();
-                                Get.find<EQWishListController>().removeWishes();
-                                if (ResponsiveHelper.isDesktop(context)) {
-                                  Get.offAllNamed(
-                                      RouteHelper.getInitialRoute());
-                                } else {
-                                  Get.offAllNamed(RouteHelper.getSignInRoute(
-                                      RouteHelper.splash));
-                                }
-                              }),
-                          useSafeArea: false);
-                    } else {
-                      Get.find<EQWishListController>().removeWishes();
-                      Get.toNamed(RouteHelper.getSignInRoute(Get.currentRoute));
-                    }
-                  },
-                  child: Padding(
-                    padding:   EdgeInsets.symmetric(
-                        vertical: Dimensions.paddingSizeSmall),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding:   EdgeInsets.all(2),
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.red),
-                            child: Icon(
-                              Icons.power_settings_new_sharp,
-                              size: 18,
-                              //  color: Theme.of(context).cardColor
-                            ),
-                          ),
-                          const SizedBox(
-                              width: Dimensions.paddingSizeExtraSmall),
-                          Text(
-                              Get.find<EQAuthController>().isLoggedIn()
-                                  ? 'logout'.tr
-                                  : 'sign_in'.tr,
-                              style: robotoMedium.copyWith(
-                                  fontSize: Dimensions.fontSizeLarge))
-                        ]),
-                  ),
-                ),
-                const SizedBox(height: Dimensions.paddingSizeExtremeLarge)
+                // InkWell(
+                //   onTap: () {
+                //     if (Get.find<EQAuthController>().isLoggedIn()) {
+                //       Get.dialog(
+                //           ConfirmationDialog(
+                //               icon: Images.support,
+                //               description: 'are_you_sure_to_logout'.tr,
+                //               isLogOut: true,
+                //               onYesPressed: () {
+                //                 Get.find<EQAuthController>().clearSharedData();
+                //                 Get.find<EQAuthController>().socialLogout();
+                //                 Get.find<EQCartController>().clearCartList();
+                //                 Get.find<EQWishListController>().removeWishes();
+                //                 if (ResponsiveHelper.isDesktop(context)) {
+                //                   Get.offAllNamed(
+                //                       RouteHelper.getInitialRoute());
+                //                 } else {
+                //                   Get.offAllNamed(RouteHelper.getSignInRoute(
+                //                       RouteHelper.splash));
+                //                 }
+                //               }),
+                //           useSafeArea: false);
+                //     } else {
+                //       Get.find<EQWishListController>().removeWishes();
+                //       Get.toNamed(RouteHelper.getSignInRoute(Get.currentRoute));
+                //     }
+                //   },
+                //   child: Padding(
+                //     padding:   EdgeInsets.symmetric(
+                //         vertical: Dimensions.paddingSizeSmall),
+                //     child: Row(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: [
+                //           Container(
+                //             padding:   EdgeInsets.all(2),
+                //             decoration: const BoxDecoration(
+                //                 shape: BoxShape.circle, color: Colors.red),
+                //             child: Icon(
+                //               Icons.power_settings_new_sharp,
+                //               size: 18,
+                //               //  color: Theme.of(context).cardColor
+                //             ),
+                //           ),
+                //           const SizedBox(
+                //               width: Dimensions.paddingSizeExtraSmall),
+                //           Text(
+                //               Get.find<EQAuthController>().isLoggedIn()
+                //                   ? 'logout'.tr
+                //                   : 'sign_in'.tr,
+                //               style: robotoMedium.copyWith(
+                //                   fontSize: Dimensions.fontSizeLarge))
+                //         ]),
+                //   ),
+                // ),
+                // const SizedBox(height: Dimensions.paddingSizeExtremeLarge)
               ]),
             ),
           )),

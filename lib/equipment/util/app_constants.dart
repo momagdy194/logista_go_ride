@@ -5,9 +5,7 @@ import 'package:customer/equipment/util/images.dart';
 class AppConstants {
   static const String appName = 'motorey';
   static const double appVersion = 2.2;
-
-  static const String baseUrl = 'https://motory-sa.com';
-
+  static const String baseUrl = 'http://sublogista.logista-sa.com';
   static const String categoryUri = '/api/v1/categories';
   static const String bannerUri = '/api/v1/banners';
   static const String storeItemUri = '/api/v1/items/latest';
@@ -43,8 +41,7 @@ class AppConstants {
   static const String customerInfoUri = '/api/v1/customer/info';
   static const String couponUri = '/api/v1/coupon/list';
   static const String couponApplyUri = '/api/v1/coupon/apply?code=';
-  static const String runningOrderListUri =
-      '/api/v1/customer/order/running-orders';
+  static const String runningOrderListUri = '/api/v1/customer/order/running-orders';
   static const String historyOrderListUri = '/api/v1/customer/order/list';
   static const String orderCancelUri = '/api/v1/customer/order/cancel';
   static const String codSwitchUri = '/api/v1/customer/order/payment-method';

@@ -227,4 +227,8 @@ class Images {
   static const String pendingFoodOrderDetails = 'assets/image/pending_food.gif';
   static const String headerImage = 'assets/image/header_image.png';
   static const String MapBG = 'assets/image/map_background.jpg';
+
+  static const String buy = 'assets/image/1.jpg';
+  static const String car  = 'assets/image/2.png';
+  static const String order = 'assets/image/3.png';
 }

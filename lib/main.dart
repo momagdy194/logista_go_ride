@@ -168,7 +168,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               return (GetPlatform.isWeb && splashController.configModel == null)
                   ? const SizedBox()
                   :GetMaterialApp(
-                  //     ? RouteHelper.getInitialRoute()
+                  // ? RouteHelper.getInitialRoute()
                   //     : RouteHelper.getSplashRoute(),
                   // routes: ,
                   // getPages: RouteHelper.routes,

@@ -55,7 +55,7 @@ class PopularStoreView extends StatelessWidget {
                                     .showRestaurantText!
                                 ? 'popular_restaurants'.tr
                                 : 'popular_stores'.tr
-                            : '${'new_on'.tr} ${AppConstants.appName}',
+                            : '${'new_on'.tr}',
                     onTap: () =>
                         Get.toNamed(RouteHelper.getAllStoreRoute(isFeatured
                             ? 'featured'

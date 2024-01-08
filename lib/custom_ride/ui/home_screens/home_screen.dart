@@ -46,480 +46,496 @@ class HomeScreen extends StatelessWidget {
         init: HomeController(),
         builder: (controller) {
           return Scaffold(
-            backgroundColor: AppColors.primary,
-            body: controller.isLoading.value
-                ? Constant.loader()
-                : Column(
-                    children: [
-                      SizedBox(
-                        height: Responsive.width(22, context),
-                        width: Responsive.width(100, context),
-                        child: Padding(
-                          padding:   EdgeInsets.symmetric(horizontal: 10),
-                          child: FutureBuilder<UserModel?>(
-                              future: FireStoreUtils.getUserProfile(FireStoreUtils.getCurrentUid()),
-                              builder: (context, snapshot)
-                              {
-                                switch (snapshot.connectionState) {
-                                  case ConnectionState.waiting:
-                                    return Constant.loader();
-                                  case ConnectionState.done:
-                                    if (snapshot.hasError) {
-                                      return Text(snapshot.error.toString());
-                                    } else {
-                                      UserModel userModel = snapshot.data!;
-                                      return Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(userModel.fullName.toString(), style: GoogleFonts.cairo(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 16, letterSpacing: 1)),
-                                          const SizedBox(
-                                            height: 1,
-                                          ),
-                                          Row(
-                                            children: [
-                                              SvgPicture.asset('assets/icons/ic_location.svg', width: 16),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              Expanded(child: Text(controller.currentLocation.value, style: GoogleFonts.cairo(color: Colors.white, fontWeight: FontWeight.w400),maxLines: 1,)),
-                                            ],
-                                          ),
-                                        ],
-                                      );
-                                    }
-                                  default:
-                                    return Text('Error'.tr);
-                                }
-                              }),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          decoration:
-                              BoxDecoration(color: Theme.of(context).colorScheme.background, borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
-                          child: Padding(
-                            padding:   EdgeInsets.symmetric(horizontal: 10),
-                            child: SingleChildScrollView(
+            body: Container(
+              padding:   EdgeInsets.only(bottom: 30 ),
+
+              child: Scaffold(
+                backgroundColor: AppColors.primary,
+                body: controller.isLoading.value
+                    ? Constant.loader()
+                    : Container(
+                      child: Column(
+                          children: [
+                            SizedBox(
+                              height: Responsive.width(22, context),
+                              width: Responsive.width(100, context),
                               child: Padding(
-                                padding:   EdgeInsets.only(top: 10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Visibility(
-                                      visible: controller.bannerList.isNotEmpty,
-                                      child: SizedBox(
-                                          height: MediaQuery.of(context).size.height * 0.20,
-                                          child: PageView.builder(
-                                              padEnds: false,
-                                              itemCount: controller.bannerList.length,
-                                              scrollDirection: Axis.horizontal,
-                                              controller: controller.pageController,
-                                              itemBuilder: (context, index) {
-                                                BannerModel bannerModel = controller.bannerList[index];
-                                                return Padding(
-                                                  padding:   EdgeInsets.symmetric(horizontal: 10),
-                                                  child: CachedNetworkImage(
-                                                    imageUrl: bannerModel.image.toString(),
-                                                    imageBuilder: (context, imageProvider) => Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(20),
-                                                        image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
-                                                      ),
-                                                    ),
-                                                    color: Colors.black.withOpacity(0.5),
-                                                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                );
-                                              })),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text("Where you want to go?".tr, style: GoogleFonts.cairo(fontWeight: FontWeight.w600, fontSize: 18, letterSpacing: 1)),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    controller.sourceLocationLAtLng.value.latitude == null
-                                        ? InkWell(
-                                            onTap: () async {
-                                              LocationResult? result = await Utils.showPlacePicker(context);
-                                              if (result != null) {
-                                                controller.sourceLocationController.value.text = result.formattedAddress.toString();
-                                                controller.sourceLocationLAtLng.value = LocationLatLng(latitude: result.latLng!.latitude, longitude: result.latLng!.longitude);
-                                                controller.calculateAmount();
-                                              }
-                                            },
-                                            child: TextFieldThem.buildTextFiled(context, hintText: 'Enter Location'.tr, controller: controller.sourceLocationController.value, enable: false))
-                                        : Row(
-                                            children: [
-                                              Column(
-                                                children: [
-                                                  SvgPicture.asset(themeChange.getThem() ? 'assets/icons/ic_source_dark.svg' : 'assets/icons/ic_source.svg', width: 18),
-                                                  Dash(direction: Axis.vertical, length: Responsive.height(6, context), dashLength: 12, dashColor: AppColors.dottedDivider),
-                                                  SvgPicture.asset(themeChange.getThem() ? 'assets/icons/ic_destination_dark.svg' : 'assets/icons/ic_destination.svg', width: 20),
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                width: 18,
-                                              ),
-                                              Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                padding:   EdgeInsets.symmetric(horizontal: 10),
+                                child: FutureBuilder<UserModel?>(
+                                    future: FireStoreUtils.getUserProfile(FireStoreUtils.getCurrentUid()),
+                                    builder: (context, snapshot)
+                                    {
+                                      switch (snapshot.connectionState) {
+                                        case ConnectionState.waiting:
+                                          return Constant.loader();
+                                        case ConnectionState.done:
+                                          if (snapshot.hasError) {
+                                            return Text(snapshot.error.toString());
+                                          } else {
+                                            UserModel userModel = snapshot.data!;
+                                            return Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(userModel.fullName.toString(), style: GoogleFonts.cairo(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 16, letterSpacing: 1)),
+                                                const SizedBox(
+                                                  height: 1,
+                                                ),
+                                                Row(
                                                   children: [
-                                                    InkWell(
-                                                        onTap: () async {
-                                                          LocationResult? result = await Utils.showPlacePicker(context);
-                                                          if (result != null) {
-                                                            controller.sourceLocationController.value.text = result.formattedAddress.toString();
-                                                            controller.sourceLocationLAtLng.value = LocationLatLng(latitude: result.latLng!.latitude, longitude: result.latLng!.longitude);
-                                                            controller.calculateAmount();
-                                                          }
-                                                        },
-                                                        child: Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child: TextFieldThem.buildTextFiled(context,
-                                                                  hintText: 'Enter Location'.tr, controller: controller.sourceLocationController.value, enable: false),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            // InkWell(
-                                                            //     onTap: () {
-                                                            //       ariPortDialog(context, controller, true);
-                                                            //     },
-                                                            //     child: const Icon(Icons.flight_takeoff))
-                                                          ],
-                                                        )),
-                                                    SizedBox(height: Responsive.height(1, context)),
-                                                    InkWell(
-                                                        onTap: () async {
-                                                          LocationResult? result = await Utils.showPlacePicker(context);
-                                                          if (result != null) {
-                                                            controller.destinationLocationController.value.text = result.formattedAddress.toString();
-                                                            controller.destinationLocationLAtLng.value = LocationLatLng(latitude: result.latLng!.latitude, longitude: result.latLng!.longitude);
-                                                            controller.calculateAmount();
-                                                          }
-                                                        },
-                                                        child: Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child: TextFieldThem.buildTextFiled(context,
-                                                                  hintText: 'Enter destination Location'.tr, controller: controller.destinationLocationController.value, enable: false),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            // InkWell(
-                                                            //     onTap: () {
-                                                            //       ariPortDialog(context, controller, false);
-                                                            //     },
-                                                            //     child: const Icon(Icons.flight_takeoff))
-                                                          ],
-                                                        )),
+                                                    SvgPicture.asset('assets/icons/ic_location.svg', width: 16),
+                                                    const SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    Expanded(child: Text(controller.currentLocation.value, style: GoogleFonts.cairo(color: Colors.white, fontWeight: FontWeight.w400),maxLines: 1,)),
                                                   ],
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            );
+                                          }
+                                        default:
+                                          return Text('Error'.tr);
+                                      }
+                                    }),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                decoration:
+                                    BoxDecoration(color: Theme.of(context).colorScheme.background, borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+                                child: Padding(
+                                  padding:   EdgeInsets.symmetric(horizontal: 10),
+                                  child: SingleChildScrollView(
+                                    child: Padding(
+                                      padding:   EdgeInsets.only(top: 10),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Visibility(
+                                            visible: controller.bannerList.isNotEmpty,
+                                            child: SizedBox(
+                                                height: MediaQuery.of(context).size.height * 0.20,
+                                                child: PageView.builder(
+                                                    padEnds: false,
+                                                    itemCount: controller.bannerList.length,
+                                                    scrollDirection: Axis.horizontal,
+                                                     controller: controller.pageController,
+                                                    itemBuilder: (context, index) {
+                                                      BannerModel bannerModel = controller.bannerList[index];
+                                                      return Padding(
+                                                        padding:   EdgeInsets.symmetric(horizontal: 0),
+                                                        child: CachedNetworkImage(
+                                                          imageUrl: bannerModel.image.toString(),
+                                                          imageBuilder: (context, imageProvider) => Container(
+                                                            decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(20),
+                                                              image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                                                            ),
+                                                          ),
+                                                          color: Colors.black.withOpacity(0.5),
+                                                          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      );
+                                                    })),
                                           ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Text("Select Vehicle".tr, style: GoogleFonts.cairo(fontWeight: FontWeight.w500, letterSpacing: 1)),
-                                    const SizedBox(
-                                      height: 05,
-                                    ),
-                                    SizedBox(
-                                      height: Responsive.height(18, context),
-                                      child: ListView.builder(
-                                        itemCount: controller.serviceList.length,
-                                        scrollDirection: Axis.horizontal,
-                                        shrinkWrap: true,
-                                        itemBuilder: (context, index) {
-                                          ServiceModel mainCategory = controller.serviceList[index];
-                                          return Obx(
-                                            () => InkWell(
-                                              onTap: () async{
-                                                controller.calculateAmount();
-                                                showLoadingIndicator(text: "Get vehicle category");
-                                             await   controller.getServiceSubCategory(parentCategoryId: mainCategory.id);
-                                                hideOpenDialog();
-                                                subCategoryDialogDialog(context, controller,mainCategory);
-                                              },
-                                              child: Padding(
-                                                padding:   EdgeInsets.all(6.0),
-                                                child: Container(
-                                                  width: Responsive.width(28, context),
-                                                  decoration: BoxDecoration(
-                                                      color: controller.selectedType.value == mainCategory
-                                                          ? themeChange.getThem()
-                                                              ? AppColors.darkModePrimary
-                                                              : AppColors.primary
-                                                          : themeChange.getThem()
-                                                              ? AppColors.darkService
-                                                              : controller.colors[index % controller.colors.length],
-                                                      borderRadius: const BorderRadius.all(
-                                                        Radius.circular(10),
-                                                      )),
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Container(
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text("Where you want to go?".tr, style: GoogleFonts.cairo(fontWeight: FontWeight.w600, fontSize: 18, letterSpacing: 1)),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          controller.sourceLocationLAtLng.value.latitude == null
+                                              ? InkWell(
+                                                  onTap: () async {
+                                                    LocationResult? result = await Utils.showPlacePicker(context);
+                                                    if (result != null) {
+                                                      controller.sourceLocationController.value.text = result.formattedAddress.toString();
+                                                      controller.sourceLocationLAtLng.value = LocationLatLng(latitude: result.latLng!.latitude, longitude: result.latLng!.longitude);
+                                                      controller.calculateAmount();
+                                                    }
+                                                  },
+                                                  child: TextFieldThem.buildTextFiled(context, hintText: 'Enter Location'.tr, controller: controller.sourceLocationController.value, enable: false))
+                                              : Row(
+                                                  children: [
+                                                    Column(
+                                                      children: [
+                                                        SvgPicture.asset(themeChange.getThem() ? 'assets/icons/ic_source_dark.svg' : 'assets/icons/ic_source.svg', width: 18),
+                                                        Dash(direction: Axis.vertical, length: Responsive.height(6, context), dashLength: 12, dashColor: AppColors.dottedDivider),
+                                                        SvgPicture.asset(themeChange.getThem() ? 'assets/icons/ic_destination_dark.svg' : 'assets/icons/ic_destination.svg', width: 20),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 18,
+                                                    ),
+                                                    Expanded(
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          InkWell(
+                                                              onTap: () async {
+                                                                LocationResult? result = await Utils.showPlacePicker(context);
+                                                                if (result != null) {
+                                                                  controller.sourceLocationController.value.text = result.formattedAddress.toString();
+                                                                  controller.sourceLocationLAtLng.value = LocationLatLng(latitude: result.latLng!.latitude, longitude: result.latLng!.longitude);
+                                                                  controller.calculateAmount();
+                                                                }
+                                                              },
+                                                              child: Row(
+                                                                children: [
+                                                                  Expanded(
+                                                                    child: TextFieldThem.buildTextFiled(context,
+                                                                        hintText: 'Enter Location'.tr, controller: controller.sourceLocationController.value, enable: false),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    width: 10,
+                                                                  ),
+                                                                  // InkWell(
+                                                                  //     onTap: () {
+                                                                  //       ariPortDialog(context, controller, true);
+                                                                  //     },
+                                                                  //     child: const Icon(Icons.flight_takeoff))
+                                                                ],
+                                                              )),
+                                                          SizedBox(height: Responsive.height(1, context)),
+                                                          InkWell(
+                                                              onTap: () async {
+                                                                LocationResult? result = await Utils.showPlacePicker(context);
+                                                                if (result != null) {
+                                                                  controller.destinationLocationController.value.text = result.formattedAddress.toString();
+                                                                  controller.destinationLocationLAtLng.value = LocationLatLng(latitude: result.latLng!.latitude, longitude: result.latLng!.longitude);
+                                                                  controller.calculateAmount();
+                                                                }
+                                                              },
+                                                              child: Row(
+                                                                children: [
+                                                                  Expanded(
+                                                                    child: TextFieldThem.buildTextFiled(context,
+                                                                        hintText: 'Enter destination Location'.tr, controller: controller.destinationLocationController.value, enable: false),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    width: 10,
+                                                                  ),
+                                                                  // InkWell(
+                                                                  //     onTap: () {
+                                                                  //       ariPortDialog(context, controller, false);
+                                                                  //     },
+                                                                  //     child: const Icon(Icons.flight_takeoff))
+                                                                ],
+                                                              )),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          Text("Select Vehicle".tr, style: GoogleFonts.cairo(fontWeight: FontWeight.w500, letterSpacing: 1)),
+                                          const SizedBox(
+                                            height: 05,
+                                          ),
+                                          SizedBox(
+                                            height: Responsive.height(18, context),
+                                            child: ListView.builder(
+                                              itemCount: controller.serviceList.length,
+                                              scrollDirection: Axis.horizontal,
+                                              shrinkWrap: true,
+                                              itemBuilder: (context, index) {
+                                                ServiceModel mainCategory = controller.serviceList[index];
+                                                return Obx(
+                                                  () => InkWell(
+                                                    onTap: () async{
+                                                      if(mainCategory.id==controller.taxiCarId||
+                                                          mainCategory.id== controller.cargoShipping){
+                                                        controller.selectedType.value = mainCategory;
+
+                                                      }else{
+                                                        showLoadingIndicator(text: "Get vehicle category");
+                                                        await   controller.getServiceSubCategory(parentCategoryId: mainCategory.id);
+                                                        hideOpenDialog();
+                                                        subCategoryDialogDialog(context, controller,mainCategory);
+
+                                                      }
+                                                      controller.calculateAmount();
+
+                                                    },
+                                                    child: Padding(
+                                                      padding:   EdgeInsets.all(6.0),
+                                                      child: Container(
+                                                        width: Responsive.width(28, context),
                                                         decoration: BoxDecoration(
-                                                            color: Theme.of(context).colorScheme.background,
+                                                            color: controller.selectedType.value == mainCategory
+                                                                ? themeChange.getThem()
+                                                                    ? AppColors.darkModePrimary
+                                                                    : AppColors.primary
+                                                                : themeChange.getThem()
+                                                                    ? AppColors.darkService
+                                                                    : controller.colors[index % controller.colors.length],
                                                             borderRadius: const BorderRadius.all(
                                                               Radius.circular(10),
                                                             )),
-                                                        child: Padding(
-                                                          padding:   EdgeInsets.all(8.0),
-                                                          child: CachedNetworkImage(
-                                                            imageUrl: mainCategory.image.toString(),
-                                                            fit: BoxFit.contain,
-                                                            height: Responsive.height(8, context),
-                                                            width: Responsive.width(18, context),
-                                                            placeholder: (context, url) => Constant.loader(),
-                                                            errorWidget: (context, url, error) => Image.network(Constant.userPlaceHolder),
-                                                          ),
+                                                        child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          children: [
+                                                            Container(
+                                                              decoration: BoxDecoration(
+                                                                  color: Theme.of(context).colorScheme.background,
+                                                                  borderRadius: const BorderRadius.all(
+                                                                    Radius.circular(10),
+                                                                  )),
+                                                              child: Padding(
+                                                                padding:   EdgeInsets.all(8.0),
+                                                                child: CachedNetworkImage(
+                                                                  imageUrl: mainCategory.image.toString(),
+                                                                  fit: BoxFit.contain,
+                                                                  height: Responsive.height(8, context),
+                                                                  width: Responsive.width(18, context),
+                                                                  placeholder: (context, url) => Constant.loader(),
+                                                                  errorWidget: (context, url, error) => Image.network(Constant.userPlaceHolder),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            Text(mainCategory.title.toString(),
+                                                                style: GoogleFonts.cairo(
+                                                                    color: controller.selectedType.value == mainCategory
+                                                                        ? themeChange.getThem()
+                                                                            ? Colors.black
+                                                                            : Colors.white
+                                                                        : themeChange.getThem()
+                                                                            ? Colors.white
+                                                                            : Colors.black)),
+                                                          ],
                                                         ),
                                                       ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          Obx(
+                                            () => controller.sourceLocationLAtLng.value.latitude != null && controller.destinationLocationLAtLng.value.latitude != null && controller.amount.value.isNotEmpty
+                                                ? Column(
+                                                    children: [
                                                       const SizedBox(
                                                         height: 10,
                                                       ),
-                                                      Text(mainCategory.title.toString(),
-                                                          style: GoogleFonts.cairo(
-                                                              color: controller.selectedType.value == mainCategory
-                                                                  ? themeChange.getThem()
-                                                                      ? Colors.black
-                                                                      : Colors.white
-                                                                  : themeChange.getThem()
-                                                                      ? Colors.white
-                                                                      : Colors.black)),
+                                                      Padding(
+                                                        padding:   EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                        child: Container(
+                                                          width: Responsive.width(100, context),
+                                                          decoration: const BoxDecoration(color: AppColors.gray, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                          child: Padding(
+                                                              padding:   EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                                              child: Center(
+                                                                child: controller.selectedType.value.offerRate == true
+                                                                    ? RichText(
+                                                                        text: TextSpan(
+                                                                          text:
+                                                                              '${"Recommended Price is".tr} ${Constant.amountShow(amount: controller.amount.value)}. "${"Approx time".tr}" ${controller.duration}. "${"Approx distance".tr}" ${double.parse(controller.distance.value).toStringAsFixed(Constant.currencyModel!.decimalDigits!)} ${Constant.distanceType}'
+                                                                                  .tr,
+                                                                          style: GoogleFonts.cairo(color: Colors.black),
+                                                                        ),
+                                                                      )
+                                                                    : RichText(
+                                                                        text: TextSpan(
+                                                                            text:
+                                                                                '${"Your Price is".tr} ${Constant.amountShow(amount: controller.amount.value)}. "${"Approx time".tr}" ${controller.duration}. "${"Approx distance".tr}" ${double.parse(controller.distance.value).toStringAsFixed(Constant.currencyModel!.decimalDigits!)} ${Constant.distanceType}'
+                                                                                    ,
+                                                                            style: GoogleFonts.cairo(color: Colors.black)),
+                                                                      ),
+                                                              )),
+                                                        ),
+                                                      ),
                                                     ],
-                                                  ),
+                                                  )
+                                                : Container(),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Visibility(
+                                            visible: controller.selectedType.value.offerRate == true,
+                                            child: TextFieldThem.buildTextFiledWithPrefixIcon(
+                                              context,
+                                              hintText: "Enter your offer rate".tr,
+                                              controller: controller.offerYourRateController.value,
+                                              prefix: Padding(
+                                                padding:   EdgeInsets.only(right: 10),
+                                                child: Text(Constant.currencyModel!.symbol.toString()),
+                                              ),
+                                            ),
+                                          ),
+
+
+
+
+                                         ( controller.selectedType.value.id==controller.taxiCarId|| controller.selectedType.value.id==controller.cargoShipping) ?   Column(children: [
+                                           const SizedBox(
+                                             height: 5,
+                                           ),
+                                          Text(
+                                            "The recipient".tr,
+                                            style: GoogleFonts.cairo(),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              someOneTakingDialog(context, controller);
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                                border: Border.all(color: AppColors.textFieldBorder, width: 1),
+                                              ),
+                                              child: Padding(
+                                                padding:   EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                                                child: Row(
+                                                  children: [
+                                                    const Icon(Icons.person),
+                                                    const SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Expanded(
+                                                        child: Text(
+                                                          controller.selectedTakingRide.value.fullName == "Myself" ? "Myself".tr : controller.selectedTakingRide.value.fullName.toString(),
+                                                          style: GoogleFonts.cairo(),
+                                                        )),
+                                                    const Icon(Icons.arrow_drop_down_outlined)
+                                                  ],
                                                 ),
                                               ),
                                             ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    Obx(
-                                      () => controller.sourceLocationLAtLng.value.latitude != null && controller.destinationLocationLAtLng.value.latitude != null && controller.amount.value.isNotEmpty
-                                          ? Column(
-                                              children: [
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Padding(
-                                                  padding:   EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                                  child: Container(
-                                                    width: Responsive.width(100, context),
-                                                    decoration: const BoxDecoration(color: AppColors.gray, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                                    child: Padding(
-                                                        padding:   EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                                                        child: Center(
-                                                          child: controller.selectedType.value.offerRate == true
-                                                              ? RichText(
-                                                                  text: TextSpan(
-                                                                    text:
-                                                                        'Recommended Price is ${Constant.amountShow(amount: controller.amount.value)}. Approx time ${controller.duration}. Approx distance ${double.parse(controller.distance.value).toStringAsFixed(Constant.currencyModel!.decimalDigits!)} ${Constant.distanceType}'
-                                                                            .tr,
-                                                                    style: GoogleFonts.cairo(color: Colors.black),
-                                                                  ),
-                                                                )
-                                                              : RichText(
-                                                                  text: TextSpan(
-                                                                      text:
-                                                                          'Your Price is ${Constant.amountShow(amount: controller.amount.value)}. Approx time ${controller.duration}. Approx distance ${double.parse(controller.distance.value).toStringAsFixed(Constant.currencyModel!.decimalDigits!)} ${Constant.distanceType}'
-                                                                              .tr,
-                                                                      style: GoogleFonts.cairo(color: Colors.black)),
-                                                                ),
-                                                        )),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          : Container(),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Visibility(
-                                      visible: controller.selectedType.value.offerRate == true,
-                                      child: TextFieldThem.buildTextFiledWithPrefixIcon(
-                                        context,
-                                        hintText: "Enter your offer rate".tr,
-                                        controller: controller.offerYourRateController.value,
-                                        prefix: Padding(
-                                          padding:   EdgeInsets.only(right: 10),
-                                          child: Text(Constant.currencyModel!.symbol.toString()),
-                                        ),
-                                      ),
-                                    ),
-
-
-
-
-                                   ( controller.selectedType.value.id==controller.taxiCarId|| controller.selectedType.value.id==controller.cargoShipping) ?   Column(children: [
-                                     const SizedBox(
-                                       height: 5,
-                                     ),
-                                    Text(
-                                      "The recipient".tr,
-                                      style: GoogleFonts.cairo(),
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        someOneTakingDialog(context, controller);
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(Radius.circular(4)),
-                                          border: Border.all(color: AppColors.textFieldBorder, width: 1),
-                                        ),
-                                        child: Padding(
-                                          padding:   EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-                                          child: Row(
-                                            children: [
-                                              const Icon(Icons.person),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                  child: Text(
-                                                    controller.selectedTakingRide.value.fullName == "Myself" ? "Myself".tr : controller.selectedTakingRide.value.fullName.toString(),
-                                                    style: GoogleFonts.cairo(),
-                                                  )),
-                                              const Icon(Icons.arrow_drop_down_outlined)
-                                            ],
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],)
-                                 :SizedBox(),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        paymentMethodDialog(context, controller);
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(Radius.circular(4)),
-                                          border: Border.all(color: AppColors.textFieldBorder, width: 1),
-                                        ),
-                                        child: Padding(
-                                          padding:   EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-                                          child: Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/icons/ic_payment.svg',
-                                                width: 26,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                  child: Text(
-                                                controller.selectedPaymentMethod.value.isNotEmpty ? controller.selectedPaymentMethod.value : "Select Payment type".tr,
-                                                style: GoogleFonts.cairo(),
-                                              )),
-                                              const Icon(Icons.arrow_drop_down_outlined)
-                                            ],
+                                        ],)
+                                       :SizedBox(),
+                                          const SizedBox(
+                                            height: 10,
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    ButtonThem.buildButton(
-                                      context,
-                                      title: "Book Ride".tr,
-                                      btnWidthRatio: Responsive.width(100, context),
-                                      onPress: () async {
-                                        bool isPaymentNotCompleted = await FireStoreUtils.paymentStatusCheck();
-                                        if (controller.selectedPaymentMethod.value.isEmpty) {
-                                          ShowToastDialog.showToast("Please select Payment Method".tr);
-                                        } else if (controller.sourceLocationController.value.text.isEmpty) {
-                                          ShowToastDialog.showToast("Please select source location".tr);
-                                        } else if (controller.destinationLocationController.value.text.isEmpty) {
-                                          ShowToastDialog.showToast("Please select destination location".tr);
-                                        } else if (double.parse(controller.distance.value) <= 2) {
-                                          ShowToastDialog.showToast("Please select more than two ${Constant.distanceType} location".tr);
-                                        } else if (controller.selectedType.value.offerRate == true && controller.offerYourRateController.value.text.isEmpty) {
-                                          ShowToastDialog.showToast("Please Enter offer rate".tr);
-                                        } else if (isPaymentNotCompleted) {
-                                          showAlertDialog(context);
-                                          // showDialog(context: context, builder: (BuildContext context) => warningDailog());
-                                        } else {
-                                          // ShowToastDialog.showLoader("Please wait");
-                                          OrderModel orderModel = OrderModel();
-                                          orderModel.id = Constant.getUuid();
-                                          orderModel.userId = FireStoreUtils.getCurrentUid();
-                                          orderModel.sourceLocationName = controller.sourceLocationController.value.text;
-                                          orderModel.destinationLocationName = controller.destinationLocationController.value.text;
-                                          orderModel.sourceLocationLAtLng = controller.sourceLocationLAtLng.value;
-                                          orderModel.destinationLocationLAtLng = controller.destinationLocationLAtLng.value;
-                                          orderModel.distance = controller.distance.value;
-                                          orderModel.distanceType = Constant.distanceType;
-                                          orderModel.offerRate = controller.selectedType.value.offerRate == true ? controller.offerYourRateController.value.text : controller.amount.value;
-                                          orderModel.serviceId = controller.selectedType.value.id;
-                                          GeoFirePoint position =
-                                              GeoFlutterFire().point(latitude: controller.sourceLocationLAtLng.value.latitude!, longitude: controller.sourceLocationLAtLng.value.longitude!);
+                                          InkWell(
+                                            onTap: () {
+                                              paymentMethodDialog(context, controller);
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                                border: Border.all(color: AppColors.textFieldBorder, width: 1),
+                                              ),
+                                              child: Padding(
+                                                padding:   EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                                                child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/icons/ic_payment.svg',
+                                                      width: 26,
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Expanded(
+                                                        child: Text(
+                                                      controller.selectedPaymentMethod.value.isNotEmpty ? controller.selectedPaymentMethod.value : "Select Payment type".tr,
+                                                      style: GoogleFonts.cairo(),
+                                                    )),
+                                                    const Icon(Icons.arrow_drop_down_outlined)
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          ButtonThem.buildButton(
+                                            context,
+                                            title: "Book Ride".tr,
+                                            btnWidthRatio: Responsive.width(100, context),
+                                            onPress: () async {
+                                              bool isPaymentNotCompleted = await FireStoreUtils.paymentStatusCheck();
+                                              if (controller.selectedPaymentMethod.value.isEmpty) {
+                                                ShowToastDialog.showToast("Please select Payment Method".tr);
+                                              } else if (controller.sourceLocationController.value.text.isEmpty) {
+                                                ShowToastDialog.showToast("Please select source location".tr);
+                                              } else if (controller.destinationLocationController.value.text.isEmpty) {
+                                                ShowToastDialog.showToast("Please select destination location".tr);
+                                              } else if (double.parse(controller.distance.value) <= 2) {
+                                                ShowToastDialog.showToast("Please select more than two ${Constant.distanceType} location".tr);
+                                              } else if (controller.selectedType.value.offerRate == true && controller.offerYourRateController.value.text.isEmpty) {
+                                                ShowToastDialog.showToast("Please Enter offer rate".tr);
+                                              } else if (isPaymentNotCompleted) {
+                                                showAlertDialog(context);
+                                                // showDialog(context: context, builder: (BuildContext context) => warningDailog());
+                                              } else {
+                                                // ShowToastDialog.showLoader("Please wait");
+                                                OrderModel orderModel = OrderModel();
+                                                orderModel.id = Constant.getUuid();
+                                                orderModel.userId = FireStoreUtils.getCurrentUid();
+                                                orderModel.sourceLocationName = controller.sourceLocationController.value.text;
+                                                orderModel.destinationLocationName = controller.destinationLocationController.value.text;
+                                                orderModel.sourceLocationLAtLng = controller.sourceLocationLAtLng.value;
+                                                orderModel.destinationLocationLAtLng = controller.destinationLocationLAtLng.value;
+                                                orderModel.distance = controller.distance.value;
+                                                orderModel.distanceType = Constant.distanceType;
+                                                orderModel.offerRate = controller.selectedType.value.offerRate == true ? controller.offerYourRateController.value.text : controller.amount.value;
+                                                orderModel.serviceId = controller.selectedType.value.id;
+                                                GeoFirePoint position =
+                                                    GeoFlutterFire().point(latitude: controller.sourceLocationLAtLng.value.latitude!, longitude: controller.sourceLocationLAtLng.value.longitude!);
 
-                                          orderModel.position = Positions(geoPoint: position.geoPoint, geohash: position.hash);
-                                          orderModel.createdDate = Timestamp.now();
-                                          orderModel.status = Constant.ridePlaced;
-                                          orderModel.paymentType = controller.selectedPaymentMethod.value;
-                                          orderModel.paymentStatus = false;
-                                          orderModel.service = controller.selectedType.value;
-                                          orderModel.adminCommission =
-                                              controller.selectedType.value.adminCommission!.isEnabled == false ? controller.selectedType.value.adminCommission! : Constant.adminCommission;
-                                          orderModel.otp = Constant.getReferralCode();
-                                          orderModel.taxList = Constant.taxList;
-                                          if (controller.selectedTakingRide.value.fullName != "Myself") {
-                                            orderModel.someOneElse = controller.selectedTakingRide.value;
-                                          }
+                                                orderModel.position = Positions(geoPoint: position.geoPoint, geohash: position.hash);
+                                                orderModel.createdDate = Timestamp.now();
+                                                orderModel.status = Constant.ridePlaced;
+                                                orderModel.paymentType = controller.selectedPaymentMethod.value;
+                                                orderModel.paymentStatus = false;
+                                                orderModel.service = controller.selectedType.value;
+                                                orderModel.adminCommission =
+                                                    controller.selectedType.value.adminCommission!.isEnabled == false ? controller.selectedType.value.adminCommission! : Constant.adminCommission;
+                                                orderModel.otp = Constant.getReferralCode();
+                                                orderModel.taxList = Constant.taxList;
+                                                if (controller.selectedTakingRide.value.fullName != "Myself") {
+                                                  orderModel.someOneElse = controller.selectedTakingRide.value;
+                                                }
 
-                                          // FireStoreUtils().startStream();
-                                          FireStoreUtils().sendOrderData(orderModel).listen((event) {
-                                            event.forEach((element) async {
-                                              if (element.fcmToken != null) {
-                                                Map<String, dynamic> playLoad = <String, dynamic>{"type": "city_order", "orderId": orderModel.id};
-                                                await SendNotification.sendOneNotification(
-                                                    token: element.fcmToken.toString(),
-                                                    title: 'New Ride Available'.tr,
-                                                    body: 'A customer has placed an ride near your location.'.tr,
-                                                    payload: playLoad);
+                                                // FireStoreUtils().startStream();
+                                                FireStoreUtils().sendOrderData(orderModel).listen((event) {
+                                                  event.forEach((element) async {
+                                                    if (element.fcmToken != null) {
+                                                      Map<String, dynamic> playLoad = <String, dynamic>{"type": "city_order", "orderId": orderModel.id};
+                                                      await SendNotification.sendOneNotification(
+                                                          token: element.fcmToken.toString(),
+                                                          title: 'New Ride Available'.tr,
+                                                          body: 'A customer has placed an ride near your location.'.tr,
+                                                          payload: playLoad);
+                                                    }
+                                                  });
+                                                  FireStoreUtils().closeStream();
+                                                });
+                                                await FireStoreUtils.setOrder(orderModel).then((value) {
+                                                  ShowToastDialog.showToast("Ride Placed successfully".tr);
+                                                  controller.dashboardController.selectedDrawerIndex(1);
+                                                  ShowToastDialog.closeLoader();
+                                                });
                                               }
-                                            });
-                                            FireStoreUtils().closeStream();
-                                          });
-                                          await FireStoreUtils.setOrder(orderModel).then((value) {
-                                            ShowToastDialog.showToast("Ride Placed successfully".tr);
-                                            controller.dashboardController.selectedDrawerIndex(1);
-                                            ShowToastDialog.closeLoader();
-                                          });
-                                        }
-                                      },
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
+                    ),
+              ),
+            ),
           );
         });
   }

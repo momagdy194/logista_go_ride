@@ -14,6 +14,7 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
 import '../../equipment/helper/route_helper.dart';
+import '../../equipment/util/images.dart';
 
 class DashBoardScreen extends StatefulWidget {
   DashBoardScreen({Key? key}) : super(key: key);
@@ -159,10 +160,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   Container(
                     width: 100,
                     child: IconButton(
-                      icon: Icon(
-                        IconlyLight.home,
-                        color: AppColors.primary,
-                      ),
+                      icon: Image.asset(Images.order,height: 20,color: AppColors.primary,),
                       onPressed: () {
                         // controller.drawerItems[2].title
                         controller.onSelectItem(0);
@@ -172,10 +170,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   Container(
                     width: 100,
                     child: IconButton(
-                      icon: Icon(
-                        IconlyLight.bag_2,
-                        color: AppColors.primary,
-                      ),
+                      icon: Image.asset(Images.car,height: 20,color: AppColors.primary,),
                       onPressed: () {
                         controller.onSelectItem(1);
                       },
@@ -192,7 +187,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 Navigator.pushNamed(context, RouteHelper.getInitialRoute());
                 //code to execute on button press
               },
-              child: Icon(IconlyLight.buy ,color: AppColors.primary,), //icon inside button
+              child:
+          Image.asset(Images.buy,height: 20,color: AppColors.primary,),
+            // Icon(IconlyLight.buy ,color: AppColors.primary,), //icon inside button
             ),
           );
         });}

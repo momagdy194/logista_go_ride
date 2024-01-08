@@ -1,17 +1,14 @@
 import 'dart:io';
 
-import 'package:dotted_border/dotted_border.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:just_the_tooltip/just_the_tooltip.dart';
+import 'package:customer/custom_ride/themes/app_colors.dart';
 import 'package:customer/equipment/controller/auth_controller.dart';
 import 'package:customer/equipment/controller/cart_controller.dart';
 import 'package:customer/equipment/controller/coupon_controller.dart';
-import 'package:customer/equipment/controller/localization_controller.dart';
 import 'package:customer/equipment/controller/location_controller.dart';
 import 'package:customer/equipment/controller/order_controller.dart';
 import 'package:customer/equipment/controller/parcel_controller.dart';
-import 'package:customer/equipment/controller/store_controller.dart';
 import 'package:customer/equipment/controller/splash_controller.dart';
+import 'package:customer/equipment/controller/store_controller.dart';
 import 'package:customer/equipment/controller/user_controller.dart';
 import 'package:customer/equipment/data/model/body/place_order_body.dart';
 import 'package:customer/equipment/data/model/response/address_model.dart';
@@ -37,24 +34,28 @@ import 'package:customer/equipment/view/base/image_picker_widget.dart';
 import 'package:customer/equipment/view/base/menu_drawer.dart';
 import 'package:customer/equipment/view/base/not_logged_in_screen.dart';
 import 'package:customer/equipment/view/screens/address/widget/address_widget.dart';
-import 'package:customer/equipment/view/screens/cart/widget/delivery_option_button.dart';
 import 'package:customer/equipment/view/screens/checkout/widget/condition_check_box.dart';
-import 'package:customer/equipment/view/screens/checkout/widget/coupon_bottom_sheet.dart';
-import 'package:customer/equipment/view/screens/checkout/widget/delivery_instruction_view.dart';
 import 'package:customer/equipment/view/screens/checkout/widget/payment_method_bottom_sheet.dart';
-import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:customer/equipment/view/screens/checkout/widget/time_slot_bottom_sheet.dart';
 import 'package:customer/equipment/view/screens/checkout/widget/tips_widget.dart';
 import 'package:customer/equipment/view/screens/home/home_screen.dart';
 import 'package:customer/equipment/view/screens/store/widget/camera_button_sheet.dart';
-import 'package:universal_html/html.dart' as html;
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart' as intl ;
+import 'package:just_the_tooltip/just_the_tooltip.dart';
+import 'package:universal_html/html.dart' as html;
+
+import '../../../../external_lip/date_time_picker.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final List<CartModel?>? cartList;
   final bool fromCart;
   final int? storeId;
+
   const CheckoutScreen(
       {Key? key,
       required this.fromCart,
@@ -804,57 +805,57 @@ class CheckoutScreenState extends State<CheckoutScreen> {
             : const SizedBox(),
         const SizedBox(height: Dimensions.paddingSizeSmall),
 
-        // delivery option
-        Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            boxShadow: [
-              BoxShadow(
-                  color: Theme.of(context).primaryColor.withOpacity(0.05),
-                  blurRadius: 10)
-            ],
-          ),
-          padding:   EdgeInsets.symmetric(
-              horizontal: Dimensions.paddingSizeLarge,
-              vertical: Dimensions.paddingSizeSmall),
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('delivery_option'.tr, style: robotoMedium),
-              const SizedBox(height: Dimensions.paddingSizeSmall),
-              widget.storeId != null
-                  ? DeliveryOptionButton(
-                      value: 'delivery',
-                      title: 'home_delivery'.tr,
-                      charge: charge,
-                      isFree: storeController.store!.freeDelivery,
-                    )
-                  : SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(children: [
-                        storeController.store!.delivery!
-                            ? DeliveryOptionButton(
-                                value: 'delivery',
-                                title: 'home_delivery'.tr,
-                                charge: charge,
-                                isFree: storeController.store!.freeDelivery,
-                              )
-                            : const SizedBox(),
-                        const SizedBox(width: Dimensions.paddingSizeDefault),
-                        storeController.store!.takeAway!
-                            ? DeliveryOptionButton(
-                                value: 'take_away',
-                                title: 'take_away'.tr,
-                                charge: deliveryCharge,
-                                isFree: true,
-                              )
-                            : const SizedBox(),
-                      ]),
-                    ),
-            ],
-          ),
-        ),
+        // // delivery option
+        // Container(
+        //   decoration: BoxDecoration(
+        //     color: Theme.of(context).cardColor,
+        //     boxShadow: [
+        //       BoxShadow(
+        //           color: Theme.of(context).primaryColor.withOpacity(0.05),
+        //           blurRadius: 10)
+        //     ],
+        //   ),
+        //   padding:   EdgeInsets.symmetric(
+        //       horizontal: Dimensions.paddingSizeLarge,
+        //       vertical: Dimensions.paddingSizeSmall),
+        //   width: double.infinity,
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       Text('delivery_option'.tr, style: robotoMedium),
+        //       const SizedBox(height: Dimensions.paddingSizeSmall),
+        //       widget.storeId != null
+        //           ? DeliveryOptionButton(
+        //               value: 'delivery',
+        //               title: 'home_delivery'.tr,
+        //               charge: charge,
+        //               isFree: storeController.store!.freeDelivery,
+        //             )
+        //           : SingleChildScrollView(
+        //               scrollDirection: Axis.horizontal,
+        //               child: Row(children: [
+        //                 storeController.store!.delivery!
+        //                     ? DeliveryOptionButton(
+        //                         value: 'delivery',
+        //                         title: 'home_delivery'.tr,
+        //                         charge: charge,
+        //                         isFree: storeController.store!.freeDelivery,
+        //                       )
+        //                     : const SizedBox(),
+        //                 const SizedBox(width: Dimensions.paddingSizeDefault),
+        //                 storeController.store!.takeAway!
+        //                     ? DeliveryOptionButton(
+        //                         value: 'take_away',
+        //                         title: 'take_away'.tr,
+        //                         charge: deliveryCharge,
+        //                         isFree: true,
+        //                       )
+        //                     : const SizedBox(),
+        //               ]),
+        //             ),
+        //     ],
+        //   ),
+        // ),
         const SizedBox(height: Dimensions.paddingSizeDefault),
 
         !takeAway
@@ -972,38 +973,38 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: Dimensions.paddingSizeLarge),
-                      CustomTextField(
-                        titleText: 'street_number'.tr,
-                        inputType: TextInputType.streetAddress,
-                        focusNode: _streetNode,
-                        nextFocus: _houseNode,
-                        controller: _streetNumberController,
-                      ),
-                      const SizedBox(height: Dimensions.paddingSizeLarge),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: CustomTextField(
-                              titleText: 'house'.tr,
-                              inputType: TextInputType.text,
-                              focusNode: _houseNode,
-                              nextFocus: _floorNode,
-                              controller: _houseController,
-                            ),
-                          ),
-                          const SizedBox(width: Dimensions.paddingSizeSmall),
-                          Expanded(
-                            child: CustomTextField(
-                              titleText: 'floor'.tr,
-                              inputType: TextInputType.text,
-                              focusNode: _floorNode,
-                              inputAction: TextInputAction.done,
-                              controller: _floorController,
-                            ),
-                          ),
-                        ],
-                      ),
+                      // const SizedBox(height: Dimensions.paddingSizeLarge),
+                      // CustomTextField(
+                      //   titleText: 'street_number'.tr,
+                      //   inputType: TextInputType.streetAddress,
+                      //   focusNode: _streetNode,
+                      //   nextFocus: _houseNode,
+                      //   controller: _streetNumberController,
+                      // ),
+                      // const SizedBox(height: Dimensions.paddingSizeLarge),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: CustomTextField(
+                      //         titleText: 'house'.tr,
+                      //         inputType: TextInputType.text,
+                      //         focusNode: _houseNode,
+                      //         nextFocus: _floorNode,
+                      //         controller: _houseController,
+                      //       ),
+                      //     ),
+                      //     const SizedBox(width: Dimensions.paddingSizeSmall),
+                      //     Expanded(
+                      //       child: CustomTextField(
+                      //         titleText: 'floor'.tr,
+                      //         inputType: TextInputType.text,
+                      //         focusNode: _floorNode,
+                      //         inputAction: TextInputAction.done,
+                      //         controller: _floorController,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       const SizedBox(height: Dimensions.paddingSizeLarge),
                     ]),
               )
@@ -1011,7 +1012,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
         SizedBox(height: !takeAway ? Dimensions.paddingSizeSmall : 0),
 
         //delivery instruction
-        !takeAway ? const DeliveryInstructionView() : const SizedBox(),
+        // !takeAway ? const DeliveryInstructionView() : const SizedBox(),
 
         SizedBox(height: !takeAway ? Dimensions.paddingSizeSmall : 0),
 
@@ -1125,232 +1126,233 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                 ? Dimensions.paddingSizeSmall
                 : 0),
 
-        // Coupon
-        widget.storeId == null
-            ? GetBuilder<EQCouponController>(
-                builder: (couponController) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      boxShadow: [
-                        BoxShadow(
-                            color: Theme.of(context)
-                                .primaryColor
-                                .withOpacity(0.05),
-                            blurRadius: 10)
-                      ],
-                    ),
-                    padding:   EdgeInsets.symmetric(
-                        horizontal: Dimensions.paddingSizeLarge),
-                    child: Column(children: [
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('promo_code'.tr, style: robotoMedium),
-                            InkWell(
-                              onTap: () {
-                                if (ResponsiveHelper.isDesktop(context)) {
-                                  Get.dialog(const Dialog(
-                                          child: CouponBottomSheet()))
-                                      .then((value) {
-                                    if (value != null) {
-                                      _couponController.text = value.toString();
-                                    }
-                                  });
-                                } else {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    builder: (con) => const CouponBottomSheet(),
-                                  ).then((value) {
-                                    if (value != null) {
-                                      _couponController.text = value.toString();
-                                    }
-                                    if (_couponController.text.isNotEmpty) {
-                                      if (couponController.discount! < 1 &&
-                                          !couponController.freeDelivery) {
-                                        if (_couponController.text.isNotEmpty &&
-                                            !couponController.isLoading) {
-                                          couponController
-                                              .applyCoupon(
-                                                  _couponController.text,
-                                                  (price - discount) + addOns,
-                                                  deliveryCharge,
-                                                  storeController.store!.id)
-                                              .then((discount) {
-                                            if (discount! > 0) {
-                                              _couponController.text =
-                                                  'coupon_applied'.tr;
-                                              showCustomSnackBar(
-                                                '${'you_got_discount_of'.tr} ${PriceConverter.convertPrice(discount)}',
-                                                isError: false,
-                                              );
-                                            }
-                                          });
-                                        } else if (_couponController
-                                            .text.isEmpty) {
-                                          showCustomSnackBar(
-                                              'enter_a_coupon_code'.tr);
-                                        }
-                                      } else {
-                                        couponController.removeCouponData(true);
-                                        _couponController.text = '';
-                                      }
-                                    }
-                                  });
-                                }
-                              },
-                              child: Padding(
-                                padding:   EdgeInsets.all(10.0),
-                                child: Row(children: [
-                                  Text('add_voucher'.tr,
-                                      style: robotoMedium.copyWith(
-                                          fontSize: Dimensions.fontSizeSmall,
-                                          color:
-                                              Theme.of(context).primaryColor)),
-                                  const SizedBox(
-                                      width: Dimensions.paddingSizeExtraSmall),
-                                  Icon(Icons.add,
-                                      size: 20,
-                                      color: Theme.of(context).primaryColor),
-                                ]),
-                              ),
-                            )
-                          ]),
-                      const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(Dimensions.radiusDefault),
-                          border: Border.all(
-                              color: Theme.of(context).primaryColor,
-                              width: 0.2),
-                        ),
-                        child: Row(children: [
-                          Expanded(
-                            child: SizedBox(
-                              height: 45,
-                              child: TextField(
-                                controller: _couponController,
-                                style: robotoRegular.copyWith(
-                                    height: ResponsiveHelper.isMobile(context)
-                                        ? null
-                                        : 2),
-                                decoration: InputDecoration(
-                                  hintText: 'enter_promo_code'.tr,
-                                  hintStyle: robotoRegular.copyWith(
-                                      color: Theme.of(context).hintColor),
-                                  isDense: true,
-                                  filled: true,
-                                  enabled: couponController.discount == 0,
-                                  fillColor: Theme.of(context).cardColor,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.horizontal(
-                                      left: Radius.circular(
-                                          Get.find<EQLocalizationController>()
-                                                  .isLtr
-                                              ? 10
-                                              : 0),
-                                      right: Radius.circular(
-                                          Get.find<EQLocalizationController>()
-                                                  .isLtr
-                                              ? 0
-                                              : 10),
-                                    ),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  prefixIcon: Padding(
-                                    padding:   EdgeInsets.all(15),
-                                    child: Image.asset(Images.couponIcon,
-                                        height: 10,
-                                        width: 20,
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              String couponCode = _couponController.text.trim();
-                              if (couponController.discount! < 1 &&
-                                  !couponController.freeDelivery) {
-                                if (couponCode.isNotEmpty &&
-                                    !couponController.isLoading) {
-                                  couponController
-                                      .applyCoupon(
-                                          couponCode,
-                                          (price - discount) + addOns,
-                                          deliveryCharge,
-                                          storeController.store!.id)
-                                      .then((discount) {
-                                    if (discount! > 0) {
-                                      showCustomSnackBar(
-                                        '${'you_got_discount_of'.tr} ${PriceConverter.convertPrice(discount)}',
-                                        isError: false,
-                                      );
-                                    }
-                                  });
-                                } else if (couponCode.isEmpty) {
-                                  showCustomSnackBar('enter_a_coupon_code'.tr);
-                                }
-                              } else {
-                                couponController.removeCouponData(true);
-                                _couponController.text = '';
-                              }
-                            },
-                            child: Container(
-                              height: 45,
-                              width: (couponController.discount! <= 0 &&
-                                      !couponController.freeDelivery)
-                                  ? 100
-                                  : 50,
-                              alignment: Alignment.center,
-                              margin:   EdgeInsets.all(
-                                  Dimensions.paddingSizeExtraSmall),
-                              decoration: BoxDecoration(
-                                color: (couponController.discount! <= 0 &&
-                                        !couponController.freeDelivery)
-                                    ? Theme.of(context).primaryColor
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(
-                                    Dimensions.radiusDefault),
-                              ),
-                              child: (couponController.discount! <= 0 &&
-                                      !couponController.freeDelivery)
-                                  ? !couponController.isLoading
-                                      ? Text(
-                                          'apply'.tr,
-                                          style: robotoMedium.copyWith(
-                                              color:
-                                                  Theme.of(context).cardColor),
-                                        )
-                                      : const SizedBox(
-                                          height: 30,
-                                          width: 30,
-                                          child: CircularProgressIndicator(
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                      Colors.white)),
-                                        )
-                                  : Icon(Icons.clear,
-                                      color:
-                                          Theme.of(context).colorScheme.error),
-                            ),
-                          ),
-                        ]),
-                      ),
-                      const SizedBox(height: Dimensions.paddingSizeLarge),
-                    ]),
-                  );
-                },
-              )
-            : const SizedBox(),
+        // // Coupon
+        // widget.storeId == null
+        //     ? GetBuilder<EQCouponController>(
+        //         builder: (couponController) {
+        //           return Container(
+        //             decoration: BoxDecoration(
+        //               color: Theme.of(context).cardColor,
+        //               boxShadow: [
+        //                 BoxShadow(
+        //                     color: Theme.of(context)
+        //                         .primaryColor
+        //                         .withOpacity(0.05),
+        //                     blurRadius: 10)
+        //               ],
+        //             ),
+        //             padding:   EdgeInsets.symmetric(
+        //                 horizontal: Dimensions.paddingSizeLarge),
+        //             child: Column(children: [
+        //               Row(
+        //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //                   children: [
+        //                     Text('promo_code'.tr, style: robotoMedium),
+        //                     InkWell(
+        //                       onTap: () {
+        //                         if (ResponsiveHelper.isDesktop(context)) {
+        //                           Get.dialog(const Dialog(
+        //                                   child: CouponBottomSheet()))
+        //                               .then((value) {
+        //                             if (value != null) {
+        //                               _couponController.text = value.toString();
+        //                             }
+        //                           });
+        //                         } else {
+        //                           showModalBottomSheet(
+        //                             context: context,
+        //                             isScrollControlled: true,
+        //                             backgroundColor: Colors.transparent,
+        //                             builder: (con) => const CouponBottomSheet(),
+        //                           ).then((value) {
+        //                             if (value != null) {
+        //                               _couponController.text = value.toString();
+        //                             }
+        //                             if (_couponController.text.isNotEmpty) {
+        //                               if (couponController.discount! < 1 &&
+        //                                   !couponController.freeDelivery) {
+        //                                 if (_couponController.text.isNotEmpty &&
+        //                                     !couponController.isLoading) {
+        //                                   couponController
+        //                                       .applyCoupon(
+        //                                           _couponController.text,
+        //                                           (price - discount) + addOns,
+        //                                           deliveryCharge,
+        //                                           storeController.store!.id)
+        //                                       .then((discount) {
+        //                                     if (discount! > 0) {
+        //                                       _couponController.text =
+        //                                           'coupon_applied'.tr;
+        //                                       showCustomSnackBar(
+        //                                         '${'you_got_discount_of'.tr} ${PriceConverter.convertPrice(discount)}',
+        //                                         isError: false,
+        //                                       );
+        //                                     }
+        //                                   });
+        //                                 } else if (_couponController
+        //                                     .text.isEmpty) {
+        //                                   showCustomSnackBar(
+        //                                       'enter_a_coupon_code'.tr);
+        //                                 }
+        //                               } else {
+        //                                 couponController.removeCouponData(true);
+        //                                 _couponController.text = '';
+        //                               }
+        //                             }
+        //                           });
+        //                         }
+        //                       },
+        //                       child: Padding(
+        //                         padding:   EdgeInsets.all(10.0),
+        //                         child: Row(children: [
+        //                           Text('add_voucher'.tr,
+        //                               style: robotoMedium.copyWith(
+        //                                   fontSize: Dimensions.fontSizeSmall,
+        //                                   color:
+        //                                       Theme.of(context).primaryColor)),
+        //                           const SizedBox(
+        //                               width: Dimensions.paddingSizeExtraSmall),
+        //                           Icon(Icons.add,
+        //                               size: 20,
+        //                               color: Theme.of(context).primaryColor),
+        //                         ]),
+        //                       ),
+        //                     )
+        //                   ]),
+        //               const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+        //               Container(
+        //                 decoration: BoxDecoration(
+        //                   borderRadius:
+        //                       BorderRadius.circular(Dimensions.radiusDefault),
+        //                   border: Border.all(
+        //                       color: Theme.of(context).primaryColor,
+        //                       width: 0.2),
+        //                 ),
+        //                 child: Row(children: [
+        //                   Expanded(
+        //                     child: SizedBox(
+        //                       height: 45,
+        //                       child: TextField(
+        //                         controller: _couponController,
+        //                         style: robotoRegular.copyWith(
+        //                             height: ResponsiveHelper.isMobile(context)
+        //                                 ? null
+        //                                 : 2),
+        //                         decoration: InputDecoration(
+        //                           hintText: 'enter_promo_code'.tr,
+        //                           hintStyle: robotoRegular.copyWith(
+        //                               color: Theme.of(context).hintColor),
+        //                           isDense: true,
+        //                           filled: true,
+        //                           enabled: couponController.discount == 0,
+        //                           fillColor: Theme.of(context).cardColor,
+        //                           border: OutlineInputBorder(
+        //                             borderRadius: BorderRadius.horizontal(
+        //                               left: Radius.circular(
+        //                                   Get.find<EQLocalizationController>()
+        //                                           .isLtr
+        //                                       ? 10
+        //                                       : 0),
+        //                               right: Radius.circular(
+        //                                   Get.find<EQLocalizationController>()
+        //                                           .isLtr
+        //                                       ? 0
+        //                                       : 10),
+        //                             ),
+        //                             borderSide: BorderSide.none,
+        //                           ),
+        //                           prefixIcon: Padding(
+        //                             padding:   EdgeInsets.all(15),
+        //                             child: Image.asset(Images.couponIcon,
+        //                                 height: 10,
+        //                                 width: 20,
+        //                                 color: Theme.of(context).primaryColor),
+        //                           ),
+        //                         ),
+        //                       ),
+        //                     ),
+        //                   ),
+        //                   InkWell(
+        //                     onTap: () {
+        //                       String couponCode = _couponController.text.trim();
+        //                       if (couponController.discount! < 1 &&
+        //                           !couponController.freeDelivery) {
+        //                         if (couponCode.isNotEmpty &&
+        //                             !couponController.isLoading) {
+        //                           couponController
+        //                               .applyCoupon(
+        //                                   couponCode,
+        //                                   (price - discount) + addOns,
+        //                                   deliveryCharge,
+        //                                   storeController.store!.id)
+        //                               .then((discount) {
+        //                             if (discount! > 0) {
+        //                               showCustomSnackBar(
+        //                                 '${'you_got_discount_of'.tr} ${PriceConverter.convertPrice(discount)}',
+        //                                 isError: false,
+        //                               );
+        //                             }
+        //                           });
+        //                         } else if (couponCode.isEmpty) {
+        //                           showCustomSnackBar('enter_a_coupon_code'.tr);
+        //                         }
+        //                       } else {
+        //                         couponController.removeCouponData(true);
+        //                         _couponController.text = '';
+        //                       }
+        //                     },
+        //                     child: Container(
+        //                       height: 45,
+        //                       width: (couponController.discount! <= 0 &&
+        //                               !couponController.freeDelivery)
+        //                           ? 100
+        //                           : 50,
+        //                       alignment: Alignment.center,
+        //                       margin:   EdgeInsets.all(
+        //                           Dimensions.paddingSizeExtraSmall),
+        //                       decoration: BoxDecoration(
+        //                         color: (couponController.discount! <= 0 &&
+        //                                 !couponController.freeDelivery)
+        //                             ? Theme.of(context).primaryColor
+        //                             : Colors.transparent,
+        //                         borderRadius: BorderRadius.circular(
+        //                             Dimensions.radiusDefault),
+        //                       ),
+        //                       child: (couponController.discount! <= 0 &&
+        //                               !couponController.freeDelivery)
+        //                           ? !couponController.isLoading
+        //                               ? Text(
+        //                                   'apply'.tr,
+        //                                   style: robotoMedium.copyWith(
+        //                                       color:
+        //                                           Theme.of(context).cardColor),
+        //                                 )
+        //                               : const SizedBox(
+        //                                   height: 30,
+        //                                   width: 30,
+        //                                   child: CircularProgressIndicator(
+        //                                       valueColor:
+        //                                           AlwaysStoppedAnimation<Color>(
+        //                                               Colors.white)),
+        //                                 )
+        //                           : Icon(Icons.clear,
+        //                               color:
+        //                                   Theme.of(context).colorScheme.error),
+        //                     ),
+        //                   ),
+        //                 ]),
+        //               ),
+        //               const SizedBox(height: Dimensions.paddingSizeLarge),
+        //             ]),
+        //           );
+        //         },
+        //       )
+        //     : const SizedBox(),
         // SizedBox(height: widget.storeId == null ? Dimensions.paddingSizeSmall : 0),
 
         (!takeAway &&
-                Get.find<EQSplashControllerEquip>().configModel!.dmTipsStatus == 1)
+                Get.find<EQSplashControllerEquip>().configModel!.dmTipsStatus ==
+                    1)
             ? Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).cardColor,
@@ -1699,17 +1701,17 @@ class CheckoutScreenState extends State<CheckoutScreen> {
               horizontal: Dimensions.paddingSizeLarge),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('additional_note'.tr, style: robotoMedium),
-            const SizedBox(height: Dimensions.paddingSizeSmall),
-            CustomTextField(
-              controller: _noteController,
-              titleText: 'please_provide_extra_napkin'.tr,
-              maxLines: 3,
-              inputType: TextInputType.multiline,
-              inputAction: TextInputAction.done,
-              capitalization: TextCapitalization.sentences,
-            ),
-            const SizedBox(height: Dimensions.paddingSizeLarge),
+            // Text('additional_note'.tr, style: robotoMedium),
+            // const SizedBox(height: Dimensions.paddingSizeSmall),
+            // CustomTextField(
+            //   controller: _noteController,
+            //   titleText: 'please_provide_extra_napkin'.tr,
+            //   maxLines: 3,
+            //   inputType: TextInputType.multiline,
+            //   inputAction: TextInputAction.done,
+            //   capitalization: TextCapitalization.sentences,
+            // ),
+            // const SizedBox(height: Dimensions.paddingSizeLarge),
             widget.storeId == null &&
                     Get.find<EQSplashControllerEquip>()
                         .configModel!
@@ -1944,7 +1946,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
       Get.find<EQOrderController>().clearPrevData(zoneID);
       Get.find<EQCouponController>().removeCouponData(false);
       Get.find<EQOrderController>().updateTips(
-          Get.find<EQAuthController>().getDmTipIndex().isNotEmpty
+          Get.find<EQAuthController>().getDmTipIndex()  .isNotEmpty
               ? int.parse(Get.find<EQAuthController>().getDmTipIndex())
               : 1,
           notify: false);
@@ -1952,6 +1954,11 @@ class CheckoutScreenState extends State<CheckoutScreen> {
       showCustomSnackBar(message);
     }
   }
+
+  late TextEditingController fromDateTimePickerController =
+      TextEditingController(text: DateTime.now().toString());
+  late TextEditingController toDateTimePickerController =
+      TextEditingController(text: DateTime.now().add(Duration(days: 1)).toString());
 
   Widget _orderPlaceButton(
       EQOrderController orderController,
@@ -1975,88 +1982,217 @@ class CheckoutScreenState extends State<CheckoutScreen> {
           isLoading: orderController.isLoading,
           buttonText: 'confirm_order'.tr,
           onPressed: orderController.acceptTerms
-              ? () {
-                  bool isAvailable = true;
-                  DateTime scheduleStartDate = DateTime.now();
-                  DateTime scheduleEndDate = DateTime.now();
-                  if (orderController.timeSlots == null ||
-                      orderController.timeSlots!.isEmpty) {
-                    isAvailable = false;
-                  } else {
-                    DateTime date = orderController.selectedDateSlot == 0
-                        ? DateTime.now()
-                        : DateTime.now().add(const Duration(days: 1));
-                    DateTime startTime = orderController
-                        .timeSlots![orderController.selectedTimeSlot]
-                        .startTime!;
-                    DateTime endTime = orderController
-                        .timeSlots![orderController.selectedTimeSlot].endTime!;
-                    scheduleStartDate = DateTime(date.year, date.month,
-                        date.day, startTime.hour, startTime.minute + 1);
-                    scheduleEndDate = DateTime(date.year, date.month, date.day,
-                        endTime.hour, endTime.minute + 1);
-                    if (_cartList != null) {
-                      for (CartModel? cart in _cartList!) {
-                        if (!DateConverter.isAvailable(
-                              cart!.item!.availableTimeStarts,
-                              cart.item!.availableTimeEnds,
-                              time: storeController.store!.scheduleOrder!
-                                  ? scheduleStartDate
-                                  : null,
-                            ) &&
-                            !DateConverter.isAvailable(
-                              cart.item!.availableTimeStarts,
-                              cart.item!.availableTimeEnds,
-                              time: storeController.store!.scheduleOrder!
-                                  ? scheduleEndDate
-                                  : null,
-                            )) {
-                          isAvailable = false;
-                          break;
+              ? () async {
+                  bool Complete = await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(32.0))),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:
+                              Column(mainAxisSize: MainAxisSize.min, children: [
+                            Text("From".tr),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Theme(
+                                data: ThemeData.light().copyWith(
+                                  colorScheme: ColorScheme.light(
+                                    primary: AppColors
+                                        .primary, // header background color
+                                    // onPrimary: Colors.black, // header text color
+                                    // onSurface: Colors.green, // body text color
+                                  ),
+                                  inputDecorationTheme: InputDecorationTheme(
+                                    border: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    filled: true,
+                                    fillColor: AppColors.gray.withOpacity(.8),
+                                  ),
+                                ),
+                                child: DateTimePicker(
+                                  controller: fromDateTimePickerController,
+                                  type: DateTimePickerType.dateTimeSeparate,
+                                  // initialEntryMode: DatePickerEntryMode.inputOnly,
+                                  timePickerEntryModeInput: true,
+                                  dateMask: 'd-M-yyyy',
+                                  // controller: _controller1,
+                                  //initialValue: _initialValue,
+                                  firstDate: DateTime.now(),
+                                  lastDate:
+                                      DateTime.now().add(Duration(days: 30)),
+                                  dateHintText: 'Date',
+                                  timeHintText: "time",
+
+                                  use24HourFormat: true,
+                                  //locale: Locale('pt', 'BR'),
+                                  onFieldSubmitted: (value) {
+                                    print(value.toString() + "asasas");
+                                  },
+                                  onChanged: (value) {
+                                    print(value.toString() + "asasas");
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return " From Date Is Requierd";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  onSaved: (val) => setState(() => print(val)),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text("To".tr),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Theme(
+                                data: ThemeData.light().copyWith(
+                                  colorScheme: ColorScheme.light(
+                                    primary: AppColors
+                                        .primary, // header background color
+                                    // onPrimary: Colors.black, // header text color
+                                    // onSurface: Colors.green, // body text color
+                                  ),
+                                  inputDecorationTheme: InputDecorationTheme(
+                                    border: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    filled: true,
+                                    fillColor: AppColors.gray.withOpacity(.8),
+                                  ),
+                                ),
+                                child: DateTimePicker(
+                                  controller: toDateTimePickerController,
+                                  type: DateTimePickerType.dateTimeSeparate,
+                                  // initialEntryMode: DatePickerEntryMode.inputOnly,
+                                  timePickerEntryModeInput: true,
+                                  dateMask: 'd-M-yyyy',
+                                  // controller: _controller1,
+                                  //initialValue: _initialValue,
+                                  firstDate: DateTime.now(),
+                                  lastDate:
+                                      DateTime.now().add(Duration(days: 30)),
+                                  dateHintText: 'Date',
+                                  timeHintText: "time",
+
+                                  use24HourFormat: true,
+                                  //locale: Locale('pt', 'BR'),
+                                  onFieldSubmitted: (value) {
+                                    print(value.toString() + "asasas");
+                                  },
+                                  onChanged: (value) {
+                                    print(value.toString() + "asasas");
+                                  },
+
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return " From Date Is Requierd";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  // initialDatePickerMode: DatePickerMode.,
+
+                                  onSaved: (val) => setState(() => print(val)),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            CustomButton(
+                              buttonText: 'confirm'.tr,
+                              onPressed: () {
+                                Navigator.pop(context, true);
+                              },
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            CustomButton(
+                              buttonText: "Cancel".tr,
+                              onPressed: () {
+                                Navigator.pop(context, false);
+                              },
+                              transparent: true,
+                            ),
+                          ]),
+                        ),
+                      );
+                    },
+                  );
+
+                  if (Complete == true) {
+                    bool isAvailable = true;
+                    DateTime scheduleStartDate = DateTime.now();
+                    DateTime scheduleEndDate = DateTime.now();
+                    if (orderController.timeSlots == null ||
+                        orderController.timeSlots!.isEmpty) {
+                      isAvailable = false;
+                    } else {
+                      DateTime date = orderController.selectedDateSlot == 0
+                          ? DateTime.now()
+                          : DateTime.now().add(const Duration(days: 1));
+                      DateTime startTime = orderController
+                          .timeSlots![orderController.selectedTimeSlot]
+                          .startTime!;
+                      DateTime endTime = orderController
+                          .timeSlots![orderController.selectedTimeSlot]
+                          .endTime!;
+                      scheduleStartDate = DateTime(date.year, date.month,
+                          date.day, startTime.hour, startTime.minute + 1);
+                      scheduleEndDate = DateTime(date.year, date.month,
+                          date.day, endTime.hour, endTime.minute + 1);
+                      if (_cartList != null) {
+                        for (CartModel? cart in _cartList!) {
+                          if (!DateConverter.isAvailable(
+                                cart!.item!.availableTimeStarts,
+                                cart.item!.availableTimeEnds,
+                                time: storeController.store!.scheduleOrder!
+                                    ? scheduleStartDate
+                                    : null,
+                              ) &&
+                              !DateConverter.isAvailable(
+                                cart.item!.availableTimeStarts,
+                                cart.item!.availableTimeEnds,
+                                time: storeController.store!.scheduleOrder!
+                                    ? scheduleEndDate
+                                    : null,
+                              )) {
+                            isAvailable = false;
+                            break;
+                          }
                         }
                       }
                     }
-                  }
-                  if (!_isCashOnDeliveryActive! &&
-                      !_isDigitalPaymentActive! &&
-                      !_isWalletActive) {
-                    showCustomSnackBar('no_payment_method_is_enabled'.tr);
-                  } else if (orderAmount <
-                          storeController.store!.minimumOrder! &&
-                      widget.storeId == null) {
-                    showCustomSnackBar(
-                        '${'minimum_order_amount_is'.tr} ${storeController.store!.minimumOrder}');
-                  } else if (_tipController.text.isNotEmpty &&
-                      _tipController.text != 'not_now' &&
-                      double.parse(_tipController.text.trim()) < 0) {
-                    showCustomSnackBar('tips_can_not_be_negative'.tr);
-                  } else if ((orderController.selectedDateSlot == 0 &&
-                          todayClosed) ||
-                      (orderController.selectedDateSlot == 1 &&
-                          tomorrowClosed)) {
-                    showCustomSnackBar(Get.find<EQSplashControllerEquip>()
-                            .configModel!
-                            .moduleConfig!
-                            .module!
-                            .showRestaurantText!
-                        ? 'restaurant_is_closed'.tr
-                        : 'store_is_closed'.tr);
-                  } else if (orderController.paymentMethodIndex == 0 &&
-                      _isCashOnDeliveryActive! &&
-                      maxCodOrderAmount != null &&
-                      maxCodOrderAmount != 0 &&
-                      (total > maxCodOrderAmount) &&
-                      widget.storeId == null) {
-                    showCustomSnackBar(
-                        '${'you_cant_order_more_then'.tr} ${PriceConverter.convertPrice(maxCodOrderAmount)} ${'in_cash_on_delivery'.tr}');
-                  } else if (orderController.paymentMethodIndex != 0 &&
-                      widget.storeId != null) {
-                    showCustomSnackBar('payment_method_is_not_available'.tr);
-                  } else if (orderController.timeSlots == null ||
-                      orderController.timeSlots!.isEmpty) {
-                    if (storeController.store!.scheduleOrder!) {
-                      showCustomSnackBar('select_a_time'.tr);
-                    } else {
+                    if (!_isCashOnDeliveryActive! &&
+                        !_isDigitalPaymentActive! &&
+                        !_isWalletActive) {
+                      showCustomSnackBar('no_payment_method_is_enabled'.tr);
+                    } else if (orderAmount <
+                            storeController.store!.minimumOrder! &&
+                        widget.storeId == null) {
+                      showCustomSnackBar(
+                          '${'minimum_order_amount_is'.tr} ${storeController.store!.minimumOrder}');
+                    } else if (_tipController.text.isNotEmpty &&
+                        _tipController.text != 'not_now' &&
+                        double.parse(_tipController.text.trim()) < 0) {
+                      showCustomSnackBar('tips_can_not_be_negative'.tr);
+                    } else if ((orderController.selectedDateSlot == 0 &&
+                            todayClosed) ||
+                        (orderController.selectedDateSlot == 1 &&
+                            tomorrowClosed)) {
                       showCustomSnackBar(Get.find<EQSplashControllerEquip>()
                               .configModel!
                               .moduleConfig!
@@ -2064,176 +2200,238 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                               .showRestaurantText!
                           ? 'restaurant_is_closed'.tr
                           : 'store_is_closed'.tr);
-                    }
-                  } else if (!isAvailable) {
-                    showCustomSnackBar(
-                        'one_or_more_products_are_not_available_for_this_selected_time'
-                            .tr);
-                  } else if (orderController.orderType != 'take_away' &&
-                      orderController.distance == -1 &&
-                      deliveryCharge == -1) {
-                    showCustomSnackBar('delivery_fee_not_set_yet'.tr);
-                  } else if (widget.storeId != null &&
-                      storeController.pickedPrescriptions.isEmpty) {
-                    showCustomSnackBar(
-                        'please_upload_your_prescription_images'.tr);
-                  } else if (!orderController.acceptTerms) {
-                    showCustomSnackBar(
-                        'please_accept_privacy_policy_trams_conditions_refund_policy_first'
-                            .tr);
-                  } else {
-                    AddressModel? finalAddress =
-                        address[orderController.addressIndex!];
+                    } else if (orderController.paymentMethodIndex == 0 &&
+                        _isCashOnDeliveryActive! &&
+                        maxCodOrderAmount != null &&
+                        maxCodOrderAmount != 0 &&
+                        (total > maxCodOrderAmount) &&
+                        widget.storeId == null) {
+                      showCustomSnackBar(
+                          '${'you_cant_order_more_then'.tr} ${PriceConverter.convertPrice(maxCodOrderAmount)} ${'in_cash_on_delivery'.tr}');
+                    } else if (orderController.paymentMethodIndex != 0 &&
+                        widget.storeId != null) {
+                      showCustomSnackBar('payment_method_is_not_available'.tr);
+                    } else if (orderController.timeSlots == null ||
+                        orderController.timeSlots!.isEmpty) {
+                      if (storeController.store!.scheduleOrder!) {
+                        showCustomSnackBar('select_a_time'.tr);
+                      } else {
+                        showCustomSnackBar(Get.find<EQSplashControllerEquip>()
+                                .configModel!
+                                .moduleConfig!
+                                .module!
+                                .showRestaurantText!
+                            ? 'restaurant_is_closed'.tr
+                            : 'store_is_closed'.tr);
+                      }
+                    } else if (!isAvailable) {
+                      showCustomSnackBar(
+                          'one_or_more_products_are_not_available_for_this_selected_time'
+                              .tr);
+                    } else if (orderController.orderType != 'take_away' &&
+                        orderController.distance == -1 &&
+                        deliveryCharge == -1) {
+                      showCustomSnackBar('delivery_fee_not_set_yet'.tr);
+                    } else if (widget.storeId != null &&
+                        storeController.pickedPrescriptions.isEmpty) {
+                      showCustomSnackBar(
+                          'please_upload_your_prescription_images'.tr);
+                    } else if (!orderController.acceptTerms) {
+                      showCustomSnackBar(
+                          'please_accept_privacy_policy_trams_conditions_refund_policy_first'
+                              .tr);
+                    } else {
+                      AddressModel? finalAddress =
+                          address[orderController.addressIndex!];
 
-                    if (widget.storeId == null) {
-                      List<Cart> carts = [];
-                      for (int index = 0; index < _cartList!.length; index++) {
-                        CartModel cart = _cartList![index]!;
-                        List<int?> addOnIdList = [];
-                        List<int?> addOnQtyList = [];
-                        for (var addOn in cart.addOnIds!) {
-                          addOnIdList.add(addOn.id);
-                          addOnQtyList.add(addOn.quantity);
-                        }
+                      if (widget.storeId == null) {
+                        List<Cart> carts = [];
+                        for (int index = 0;
+                            index < _cartList!.length;
+                            index++) {
+                          CartModel cart = _cartList![index]!;
+                          List<int?> addOnIdList = [];
+                          List<int?> addOnQtyList = [];
+                          for (var addOn in cart.addOnIds!) {
+                            addOnIdList.add(addOn.id);
+                            addOnQtyList.add(addOn.quantity);
+                          }
 
-                        List<OrderVariation> variations = [];
-                        if (Get.find<EQSplashControllerEquip>()
-                            .getModuleConfig(cart.item!.moduleType)
-                            .newVariation!) {
-                          for (int i = 0;
-                              i < cart.item!.foodVariations!.length;
-                              i++) {
-                            if (cart.foodVariations![i].contains(true)) {
-                              variations.add(OrderVariation(
-                                  name: cart.item!.foodVariations![i].name,
-                                  values: OrderVariationValue(label: [])));
-                              for (int j = 0;
-                                  j <
-                                      cart.item!.foodVariations![i]
-                                          .variationValues!.length;
-                                  j++) {
-                                if (cart.foodVariations![i][j]!) {
-                                  variations[variations.length - 1]
-                                      .values!
-                                      .label!
-                                      .add(cart.item!.foodVariations![i]
-                                          .variationValues![j].level);
+                          List<OrderVariation> variations = [];
+                          if (Get.find<EQSplashControllerEquip>()
+                              .getModuleConfig(cart.item!.moduleType)
+                              .newVariation!) {
+                            for (int i = 0;
+                                i < cart.item!.foodVariations!.length;
+                                i++) {
+                              if (cart.foodVariations![i].contains(true)) {
+                                variations.add(OrderVariation(
+                                    name: cart.item!.foodVariations![i].name,
+                                    values: OrderVariationValue(label: [])));
+                                for (int j = 0;
+                                    j <
+                                        cart.item!.foodVariations![i]
+                                            .variationValues!.length;
+                                    j++) {
+                                  if (cart.foodVariations![i][j]!) {
+                                    variations[variations.length - 1]
+                                        .values!
+                                        .label!
+                                        .add(cart.item!.foodVariations![i]
+                                            .variationValues![j].level);
+                                  }
                                 }
                               }
                             }
                           }
-                        }
-                        carts.add(Cart(
-                          cart.isCampaign! ? null : cart.item!.id,
-                          cart.isCampaign! ? cart.item!.id : null,
-                          cart.discountedPrice.toString(),
-                          '',
-                          Get.find<EQSplashControllerEquip>()
-                                  .getModuleConfig(cart.item!.moduleType)
-                                  .newVariation!
-                              ? null
-                              : cart.variation,
-                          Get.find<EQSplashControllerEquip>()
-                                  .getModuleConfig(cart.item!.moduleType)
-                                  .newVariation!
-                              ? variations
-                              : null,
-                          cart.quantity,
-                          addOnIdList,
-                          cart.addOns,
-                          addOnQtyList,
-                        ));
-                      }
-
-                      orderController.placeOrder(
-                          PlaceOrderBody(
-                            cart: carts,
-                            couponDiscountAmount:
-                                Get.find<EQCouponController>().discount,
-                            distance: orderController.distance,
-                            scheduleAt: !storeController.store!.scheduleOrder!
+                          carts.add(Cart(
+                            cart.isCampaign! ? null : cart.item!.id,
+                            cart.isCampaign! ? cart.item!.id : null,
+                            cart.discountedPrice.toString(),
+                            '',
+                            Get.find<EQSplashControllerEquip>()
+                                    .getModuleConfig(cart.item!.moduleType)
+                                    .newVariation!
                                 ? null
-                                : (orderController.selectedDateSlot == 0 &&
-                                        orderController.selectedTimeSlot == 0)
-                                    ? null
-                                    : DateConverter.dateToDateAndTime(
-                                        scheduleEndDate),
-                            orderAmount: total,
-                            orderNote: _noteController.text,
-                            orderType: orderController.orderType,
-                            paymentMethod:
-                                orderController.paymentMethodIndex == 0
-                                    ? 'cash_on_delivery'
-                                    : orderController.paymentMethodIndex == 1
-                                        ? 'digital_payment'
-                                        : 'wallet',
-                            couponCode:
-                                (Get.find<EQCouponController>().discount! > 0 ||
-                                        (Get.find<EQCouponController>().coupon !=
-                                                null &&
-                                            Get.find<EQCouponController>()
-                                                .freeDelivery))
-                                    ? Get.find<EQCouponController>().coupon!.code
-                                    : null,
-                            storeId: _cartList![0]!.item!.storeId,
-                            address: finalAddress.address,
-                            latitude: finalAddress.latitude,
-                            longitude: finalAddress.longitude,
-                            addressType: finalAddress.addressType,
-                            contactPersonName: finalAddress.contactPersonName ??
-                                '${Get.find<EQUserController>().userInfoModel!.fName} '
-                                    '${Get.find<EQUserController>().userInfoModel!.lName}',
-                            contactPersonNumber: finalAddress
-                                    .contactPersonNumber ??
-                                Get.find<EQUserController>().userInfoModel!.phone,
-                            streetNumber: _streetNumberController.text.trim(),
-                            house: _houseController.text.trim(),
-                            floor: _floorController.text.trim(),
-                            discountAmount: discount,
-                            taxAmount: tax,
-                            receiverDetails: null,
-                            parcelCategoryId: null,
-                            chargePayer: null,
-                            dmTips: _tipController.text.trim(),
-                            cutlery:
-                                Get.find<EQCartController>().addCutlery ? 1 : 0,
-                            unavailableItemNote: Get.find<EQCartController>()
-                                        .notAvailableIndex !=
-                                    -1
-                                ? Get.find<EQCartController>().notAvailableList[
-                                    Get.find<EQCartController>()
-                                        .notAvailableIndex]
+                                : cart.variation,
+                            Get.find<EQSplashControllerEquip>()
+                                    .getModuleConfig(cart.item!.moduleType)
+                                    .newVariation!
+                                ? variations
+                                : null,
+                            cart.quantity,
+                            addOnIdList,
+                            cart.addOns,
+                            addOnQtyList,
+                          ));
+                        }
+
+                        final f =
+                        new intl.DateFormat('dd-MM-yyyy');
+                        final t =
+                        new intl.DateFormat('kk:mm');
+
+                        orderController.placeOrder(
+                            PlaceOrderBody(
+startDate: f
+    .format(DateTime.parse(
+    fromDateTimePickerController
+        .text))
+    .toString() ,
+endDate:f
+    .format(DateTime.parse(
+    toDateTimePickerController.text))
+    .toString()  ,
+startTime:t
+    .format(DateTime.parse(
+    fromDateTimePickerController
+        .text))
+    .toString()  ,
+endTime:t
+    .format(DateTime.parse(
+    toDateTimePickerController
+        .text))
+    .toString()  ,
+
+
+
+
+
+
+                              cart: carts,
+                              couponDiscountAmount:
+                                  Get.find<EQCouponController>().discount,
+                              distance: orderController.distance,
+                              scheduleAt: !storeController.store!.scheduleOrder!
+                                  ? null
+                                  : (orderController.selectedDateSlot == 0 &&
+                                          orderController.selectedTimeSlot == 0)
+                                      ? null
+                                      : DateConverter.dateToDateAndTime(
+                                          scheduleEndDate),
+                              orderAmount: total,
+                              orderNote: _noteController.text,
+                              orderType: orderController.orderType,
+                              paymentMethod:
+                                  orderController.paymentMethodIndex == 0
+                                      ? 'cash_on_delivery'
+                                      : orderController.paymentMethodIndex == 1
+                                          ? 'digital_payment'
+                                          : 'wallet',
+                              couponCode: (Get.find<EQCouponController>()
+                                              .discount! >
+                                          0 ||
+                                      (Get.find<EQCouponController>().coupon !=
+                                              null &&
+                                          Get.find<EQCouponController>()
+                                              .freeDelivery))
+                                  ? Get.find<EQCouponController>().coupon!.code
+                                  : null,
+                              storeId: _cartList![0]!.item!.storeId,
+                              address: finalAddress.address,
+                              latitude: finalAddress.latitude,
+                              longitude: finalAddress.longitude,
+                              addressType: finalAddress.addressType,
+                              contactPersonName: finalAddress
+                                      .contactPersonName ??
+                                  '${Get.find<EQUserController>().userInfoModel!.fName} '
+                                      '${Get.find<EQUserController>().userInfoModel!.lName}',
+                              contactPersonNumber:
+                                  finalAddress.contactPersonNumber ??
+                                      Get.find<EQUserController>()
+                                          .userInfoModel!
+                                          .phone,
+                              streetNumber: _streetNumberController.text.trim(),
+                              house: _houseController.text.trim(),
+                              floor: _floorController.text.trim(),
+                              discountAmount: discount,
+                              taxAmount: tax,
+                              receiverDetails: null,
+                              parcelCategoryId: null,
+                              chargePayer: null,
+                              dmTips: _tipController.text.trim(),
+                              cutlery: Get.find<EQCartController>().addCutlery
+                                  ? 1
+                                  : 0,
+                              unavailableItemNote: Get.find<EQCartController>()
+                                          .notAvailableIndex !=
+                                      -1
+                                  ? Get.find<EQCartController>()
+                                          .notAvailableList[
+                                      Get.find<EQCartController>()
+                                          .notAvailableIndex]
+                                  : '',
+                              deliveryInstruction:
+                                  orderController.selectedInstruction != -1
+                                      ? AppConstants.deliveryInstructionList[
+                                          orderController.selectedInstruction]
+                                      : '',
+                            ),
+                            storeController.store!.zoneId,
+                            _callback,
+                            total,
+                            maxCodOrderAmount);
+                      } else {
+                        orderController.placePrescriptionOrder(
+                            widget.storeId,
+                            storeController.store!.zoneId,
+                            orderController.distance,
+                            finalAddress.address!,
+                            finalAddress.longitude!,
+                            finalAddress.latitude!,
+                            _noteController.text,
+                            storeController.pickedPrescriptions,
+                            _tipController.text.trim(),
+                            orderController.selectedInstruction != -1
+                                ? AppConstants.deliveryInstructionList[
+                                    orderController.selectedInstruction]
                                 : '',
-                            deliveryInstruction:
-                                orderController.selectedInstruction != -1
-                                    ? AppConstants.deliveryInstructionList[
-                                        orderController.selectedInstruction]
-                                    : '',
-                          ),
-                          storeController.store!.zoneId,
-                          _callback,
-                          total,
-                          maxCodOrderAmount);
-                    } else {
-                      orderController.placePrescriptionOrder(
-                          widget.storeId,
-                          storeController.store!.zoneId,
-                          orderController.distance,
-                          finalAddress.address!,
-                          finalAddress.longitude!,
-                          finalAddress.latitude!,
-                          _noteController.text,
-                          storeController.pickedPrescriptions,
-                          _tipController.text.trim(),
-                          orderController.selectedInstruction != -1
-                              ? AppConstants.deliveryInstructionList[
-                                  orderController.selectedInstruction]
-                              : '',
-                          _callback,
-                          0,
-                          0);
+                            _callback,
+                            0,
+                            0);
+                      }
                     }
-                  }
+                  } else {}
                 }
               : null),
     );

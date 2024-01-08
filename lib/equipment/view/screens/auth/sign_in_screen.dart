@@ -144,46 +144,46 @@ class SignInScreenState extends State<SignInScreen> {
               return SingleChildScrollView(
                 child: Column(
                   children: [
-                    Column(
-                      children: [
-                        ResponsiveHelper.isDesktop(context)
-                            ? Align(
-                                alignment: Alignment.topRight,
-                                child: IconButton(
-                                  onPressed: () => Get.back(),
-                                  icon: const Icon(Icons.clear),
-                                ),
-                              )
-                            : const SizedBox(),
-                         Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                  bottomRight: Radius.circular(25),
-                                  bottomLeft: Radius.circular(25)),
-                              child: Image.asset(
-                                Images.headerImage,
-                                height: context.height / 3,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                  bottomRight: Radius.circular(25),
-                                  bottomLeft: Radius.circular(25)),
-                              child: Container(color: Colors.black.withOpacity(.5),
-                                height: context.height / 3,
-                              )
-                            ),
-                            Center(
-                                child:
-                                    Image.asset(Images.logo, width: 150)),
-                          ],
-                        ),
-                      ],
-                    ),
+                    // Column(
+                    //   children: [
+                    //     ResponsiveHelper.isDesktop(context)
+                    //         ? Align(
+                    //             alignment: Alignment.topRight,
+                    //             child: IconButton(
+                    //               onPressed: () => Get.back(),
+                    //               icon: const Icon(Icons.clear),
+                    //             ),
+                    //           )
+                    //         : const SizedBox(),
+                    //      Stack(
+                    //       alignment: Alignment.center,
+                    //       children: [
+                    //         ClipRRect(
+                    //           borderRadius: BorderRadius.only(
+                    //               bottomRight: Radius.circular(25),
+                    //               bottomLeft: Radius.circular(25)),
+                    //           child: Image.asset(
+                    //             Images.headerImage,
+                    //             height: context.height / 3,
+                    //             width: double.infinity,
+                    //             fit: BoxFit.cover,
+                    //           ),
+                    //         ),
+                    //         ClipRRect(
+                    //           borderRadius: BorderRadius.only(
+                    //               bottomRight: Radius.circular(25),
+                    //               bottomLeft: Radius.circular(25)),
+                    //           child: Container(color: Colors.black.withOpacity(.5),
+                    //             height: context.height / 3,
+                    //           )
+                    //         ),
+                    //         Center(
+                    //             child:
+                    //                 Image.asset(Images.logo, width: 150)),
+                    //       ],
+                    //     ),
+                    //   ],
+                    // ),
                     Padding(
                       padding:   EdgeInsets.symmetric(horizontal: 20),
                       child: Column(

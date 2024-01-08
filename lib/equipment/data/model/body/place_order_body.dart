@@ -31,7 +31,13 @@ class PlaceOrderBody {
   String? _dmTips;
   String? _unavailableItemNote;
   String? _deliveryInstruction;
+  String? _startDate;
+  String? _endDate;
+  String? _startTime;
+  String? _endTime;
   int? _cutlery;
+
+
 
   PlaceOrderBody(
       {required List<Cart> cart,
@@ -44,7 +50,7 @@ class PlaceOrderBody {
         required double? distance,
         required String? scheduleAt,
         required double? discountAmount,
-        required double taxAmount,
+        required double   taxAmount,
         required String orderNote,
         required String? address,
         required AddressModel? receiverDetails,
@@ -62,7 +68,17 @@ class PlaceOrderBody {
         required String unavailableItemNote,
         required String deliveryInstruction,
         required int cutlery,
+
+        required String startDate,
+        required String endDate,
+        required String startTime,
+        required String endTime,
+
       }) {
+    _startDate = startDate;
+    _endDate = endDate;
+    _startTime = startTime;
+    _endTime = endTime;
     _cart = cart;
     _couponDiscountAmount = couponDiscountAmount;
     _orderAmount = orderAmount;
@@ -97,6 +113,10 @@ class PlaceOrderBody {
   double? get couponDiscountAmount => _couponDiscountAmount;
   double? get orderAmount => _orderAmount;
   String? get orderType => _orderType;
+  String? get startDate => _startDate;
+  String? get endDate => _endDate;
+  String? get startTime => _startTime;
+  String? get endTime => _endTime;
   String? get paymentMethod => _paymentMethod;
   String? get orderNote => _orderNote;
   String? get couponCode => _couponCode;
@@ -133,6 +153,10 @@ class PlaceOrderBody {
     _orderType = json['order_type'];
     _paymentMethod = json['payment_method'];
     _orderNote = json['order_note'];
+    _startDate = json['start_date'];
+    _endDate = json['end_date'];
+    _startTime = json['start_time'];
+    _endTime = json['end_time'];
     _couponCode = json['coupon_code'];
     _storeId = json['store_id'];
     _distance = json['distance'];
@@ -167,6 +191,10 @@ class PlaceOrderBody {
     }
     data['order_amount'] = _orderAmount.toString();
     data['order_type'] = _orderType!;
+    data['start_date'] = _startDate!;
+    data['end_date'] = _endDate!;
+    data['start_time'] = _startTime!;
+    data['end_time'] = _endTime!;
     data['payment_method'] = _paymentMethod!;
     if(_orderNote != null && _orderNote!.isNotEmpty) {
       data['order_note'] = _orderNote!;

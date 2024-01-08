@@ -388,8 +388,14 @@ class _ParcelRequestScreenState extends State<ParcelRequestScreen> {
         }else if(_tipController.text.isNotEmpty && double.parse(_tipController.text.trim()) < 0) {
           showCustomSnackBar('tips_can_not_be_negative'.tr);
         }else {
+
+
+
+
           Get.find<EQParcelController>().startLoader(true);
           Get.find<EQOrderController>().placeOrder(PlaceOrderBody(
+            endDate:"" ,endTime: "",startDate:"" ,startTime: "",
+
             cart: [], couponDiscountAmount: null, distance: parcelController.distance, scheduleAt: null,
             orderAmount: charge, orderNote: '', orderType: 'parcel', receiverDetails: widget.destinationAddress,
             paymentMethod: parcelController.paymentIndex == 0 ? 'cash_on_delivery' : parcelController.paymentIndex == 1 ? 'digital_payment' : 'wallet',
