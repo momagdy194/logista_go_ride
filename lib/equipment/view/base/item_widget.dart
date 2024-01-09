@@ -166,12 +166,6 @@ class ItemWidget extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: (!isStore && desktop) ? Dimensions.paddingSizeExtraSmall : 0),
-
-                      (Get.find<EQSplashControllerEquip>().configModel!.moduleConfig!.module!.unit! && item != null && item!.unitType != null) ? Text(
-                        '(${ item!.unitType ?? ''})',
-                        style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).hintColor),
-                      ) : const SizedBox(),
-
                       isStore ? Row(
                         children: [
                           RatingBar(
@@ -185,6 +179,10 @@ class ItemWidget extends StatelessWidget {
                           PriceConverter.convertPrice(item!.price, discount: discount, discountType: discountType),
                           style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall), textDirection: TextDirection.ltr,
                         ),
+                        (Get.find<EQSplashControllerEquip>().configModel!.moduleConfig!.module!.unit! && item != null && item!.unitType != null) ? Text(
+                          '  ${ item!.unitType ?? ''}  ',
+                          style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).hintColor),
+                        ) : const SizedBox(),
                         SizedBox(width: discount! > 0 ? Dimensions.paddingSizeExtraSmall : 0),
 
                         discount > 0 ? Text(

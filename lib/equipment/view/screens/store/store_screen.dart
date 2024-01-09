@@ -266,7 +266,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   ),*/
                   bottom:    RestorantTitleBarWidget(title: Column(children: [
                     Container(
-                      height: 100,
+                      height: 90,
                       color: Theme.of(context).cardColor,
                       child: Container(
                         // color: Theme.of(context).cardColor.withOpacity(scrollingRate),
@@ -630,7 +630,7 @@ SizedBox(width: 10,),
                         ),
                         const SizedBox(height: Dimensions.paddingSizeSmall),
                         SizedBox(
-                          height: 30,
+                          height: 40,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: storeController.categoryList!.length,

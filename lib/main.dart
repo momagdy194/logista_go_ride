@@ -174,15 +174,19 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   // getPages: RouteHelper.routes,
                   getPages:RouteHelper.routes,
                   title: 'Logista',
+
                   debugShowCheckedModeBanner: false,
-                  theme: Styles.themeData(false,
+                  theme: Styles.themeData(
+
+
+
+                      false,
                       // themeChangeProvider.darkTheme == 0
                       //     ? true
                       //     : themeChangeProvider.darkTheme == 1
                       //         ? false
                       //         : themeChangeProvider.getSystemThem(),
                       context
-
                   ),
                   localizationsDelegates: const [
                     CountryLocalizations.delegate,

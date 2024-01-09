@@ -218,7 +218,7 @@ const Map<String, String> deGR = {
   "on_boarding_2_title": "امكانية الدفع بسهولة",
   "on_boarding_3_title": "توصيل سريع",
   "on_boarding_1_description":
-      "حدد موقعك لمشاهدة متاجر ذات النطاق الواسع وطلب المعدات الذي تريده.",
+      "حدد موقعك لمشاهدة وكالات ذات النطاق الواسع وطلب المعدات الذي تريده.",
   "on_boarding_2_description":
       "اطلب المعدات عن طريق الدفع عند الاستلام أو ادفع عن طريق بوابة دفع أسرع وأكثر أمانًا.",
   "on_boarding_3_description":
@@ -250,9 +250,9 @@ const Map<String, String> deGR = {
   "did_not_receive_the_code": "لم يصلك الرمز؟",
   "resend": "اعد ارسالها",
   "verified": "تم التحقق",
-  "find_stores_and_items": "ابحث عن متاجر والمعدات بالقرب منك",
+  "find_stores_and_items": "ابحث عن وكالات والمعدات بالقرب منك",
   "by_allowing_location_access":
-      "من خلال السماح بالوصول إلى الموقع ، يمكنك البحث عن متاجر والالمعدات القريبة منك والحصول على توصيل أكثر دقة.",
+      "من خلال السماح بالوصول إلى الموقع ، يمكنك البحث عن وكالات والالمعدات القريبة منك والحصول على توصيل أكثر دقة.",
   "user_current_location": "استخدام الموقع الحالي",
   "set_from_map": "تعيين من الخريطة",
   "you_can_change_language": "* يمكنك تغيير اللغة لاحقًا من شريط القوائم",
@@ -261,13 +261,13 @@ const Map<String, String> deGR = {
   "choose_your_interests": "إختر\nاهتماماتك",
   "get_personalized_recommendations": "احصل على توصيات المعدات مخصصة",
   "search_food_or_store": "ابحث عن المعدات أو وكالة هنا ...",
-  "search_item_or_store": "ابحث عن العناصر أو المتاجر التي تريدها",
+  "search_item_or_store": "ابحث عن العناصر أو الوكالات التي تريدها",
   "categories": "التصنيفات",
   "popular_items_nearby": "الأكثر طلبًا",
-  "restaurants": "متاجر",
-  "stores": "المتاجر",
-  "all_restaurants": "جميع متاجر",
-  "all_stores": "جميع المتاجر",
+  "restaurants": "وكالات",
+  "stores": "الوكالات",
+  "all_restaurants": "جميع وكالات",
+  "all_stores": "جميع الوكالات",
   "please_enter_mobile":
       "الرجاء إدخال رقم هاتفك المحمول حتى نتمكن من مساعدتك في استعادة كلمة المرور الخاصة بك.",
   "done": "منجز",
@@ -550,10 +550,10 @@ const Map<String, String> deGR = {
   "settings": "إعدادات",
   "service_not_available_in_current_location":
       "الخدمة غير متوفرة في موقعك الحالي",
-  "currently_opened_restaurants": "متاجر المفتوحة حاليا",
-  "currently_opened_stores": "المتاجر المفتوحة حاليا",
-  "discounted_restaurants": "متاجر مخفضة",
-  "discounted_stores": "المتاجر المخفضة",
+  "currently_opened_restaurants": "وكالات المفتوحة حاليا",
+  "currently_opened_stores": "الوكالات المفتوحة حاليا",
+  "discounted_restaurants": "وكالات مخفضة",
+  "discounted_stores": "الوكالات المخفضة",
   "the_minimum_item_purchase_amount_for_this_coupon_is":
       "الحد الأدنى لمبلغ الشراء لهذه القسيمة هو",
   "but_you_have": "لكن لديك",
@@ -578,7 +578,7 @@ const Map<String, String> deGR = {
   "new_address_added_successfully": "تمت إضافة العنوان الجديد بنجاح",
   "restaurant_reviews": "مراجعات الوكالة",
   "store_reviews": "مراجعات الوكالة",
-  "popular_restaurants": "متاجر شعبية",
+  "popular_restaurants": "وكالات شعبية",
   "popular_stores": "الوكالات الاساسية",
   "new_on": "الوكالات الجديده",
   "restaurant_is_closed": "الوكالة مغلق",
@@ -667,7 +667,7 @@ const Map<String, String> deGR = {
   "delivery_id": "معرف التسليم",
 
   "version_1.1": "Version 1.1",
-  "featured_stores": "المتاجر المميزة",
+  "featured_stores": "الوكالات المميزة",
   "max_size_2_mb": "أقصى حجم 2 ميغا بايت",
 
   "version_1.2": "Version 1.2",
@@ -701,7 +701,7 @@ const Map<String, String> deGR = {
   "download_app_to_enjoy_more": "تحميل التطبيق للاستمتاع أكثر!",
   "download_our_app_from": "قم بتنزيل تطبيقنا من",
   "trusted_by_customers_and_store_owners":
-      "موثوق به من قبل العملاء وأصحاب المتاجر",
+      "موثوق به من قبل العملاء وأصحاب الوكالات",
   "thousands_of_stores": "آلاف المحلات",
   "excellent_shopping_experience": "تجربة تسوق ممتازة",
   "easy_checkout_and_payment_system": "نظام سداد ودفع سهل",
@@ -839,7 +839,7 @@ const Map<String, String> deGR = {
   "salary_based": "على أساس الراتب",
   "find_nearby_store_near_you": "البحث عن وكالة قريب منك",
   "see_location": "انظر الموقع",
-  "nearby_stores": "المتاجر القريبة",
+  "nearby_stores": "الوكالات القريبة",
   "can_not_add_more_than_3_image": "لا يمكن إضافة أكثر من 3 صور",
   "no_conversation_found": "لم يتم العثور على محادثة",
   "no_message_found": "لم يتم العثور على رسالة",
@@ -1144,7 +1144,7 @@ const Map<String, String> deGR = {
   "tips_can_not_be_negative": "لا يمكن أن تكون النصائح سلبية",
   "organic": "عضوي",
   "completed": "مكتمل",
-  "all_products": "جميع المنتجات",
+  "all_products": "جميع المعدات",
   "enter_phone_number": "أدخل رقم الهاتف",
 
   "Remove it from my cart": "قم بإزالته من عربتي",

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 class Styles {
   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
     return ThemeData(
+      useMaterial3: false,
       fontFamily: "Cairo",
       primarySwatch: Colors.green,
       colorScheme: ColorScheme(

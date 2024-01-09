@@ -272,13 +272,22 @@ class ItemTitleView extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                  Text(
-                                    '${PriceConverter.convertPrice(startingPrice, discount: discount, discountType: discountType)}'
-                                    '${endingPrice != null ? ' - ${PriceConverter.convertPrice(endingPrice, discount: discount, discountType: discountType)}' : ''}',
-                                    style: robotoMedium.copyWith(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: Dimensions.fontSizeLarge),
-                                    textDirection: TextDirection.ltr,
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '${PriceConverter.convertPrice(startingPrice, discount: discount, discountType: discountType)}'
+                                        '${endingPrice != null ? ' - ${PriceConverter.convertPrice(endingPrice, discount: discount, discountType: discountType)}' : ''}',
+                                        style: robotoMedium.copyWith(
+                                            color: Theme.of(context).primaryColor,
+                                            fontSize: Dimensions.fontSizeLarge),
+                                        textDirection: TextDirection.ltr,
+                                      ),
+
+                                      (Get.find<EQSplashControllerEquip>().configModel!.moduleConfig!.module!.unit! && item != null && item!.unitType != null) ? Text(
+                                        '  ${ item!.unitType ?? ''}  ',
+                                        style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).hintColor),
+                                      ) : const SizedBox(),
+                                    ],
                                   ),
                                   const SizedBox(height: 5),
                                   discount! > 0
@@ -313,51 +322,51 @@ class ItemTitleView extends StatelessWidget {
                                       : const SizedBox(),
                                 ])),
                             Column(children: [
-                              ((Get.find<EQSplashControllerEquip>()
-                                              .configModel!
-                                              .moduleConfig!
-                                              .module!
-                                              .unit! &&
-                                          item!.unitType != null) ||
-                                      (Get.find<EQSplashControllerEquip>()
-                                              .configModel!
-                                              .moduleConfig!
-                                              .module!
-                                              .vegNonVeg! &&
-                                          Get.find<EQSplashControllerEquip>()
-                                              .configModel!
-                                              .toggleVegNonVeg!))
-                                  ? Container(
-                                      padding:   EdgeInsets.symmetric(
-                                          vertical:
-                                              Dimensions.paddingSizeExtraSmall,
-                                          horizontal:
-                                              Dimensions.paddingSizeSmall),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                            Dimensions.radiusSmall),
-                                        color: Theme.of(context)
-                                            .primaryColor
-                                            .withOpacity(0.1),
-                                      ),
-                                      child: Text(
-                                        Get.find<EQSplashControllerEquip>()
-                                                .configModel!
-                                                .moduleConfig!
-                                                .module!
-                                                .unit!
-                                            ? item!.unitType ?? ''
-                                            : item!.veg == 0
-                                                ? 'non_veg'.tr
-                                                : 'veg'.tr,
-                                        style: robotoRegular.copyWith(
-                                            fontSize:
-                                                Dimensions.fontSizeExtraSmall,
-                                            color:
-                                                Theme.of(context).primaryColor),
-                                      ),
-                                    )
-                                  : const SizedBox(),
+                              // ((Get.find<EQSplashControllerEquip>()
+                              //                 .configModel!
+                              //                 .moduleConfig!
+                              //                 .module!
+                              //                 .unit! &&
+                              //             item!.unitType != null) ||
+                              //         (Get.find<EQSplashControllerEquip>()
+                              //                 .configModel!
+                              //                 .moduleConfig!
+                              //                 .module!
+                              //                 .vegNonVeg! &&
+                              //             Get.find<EQSplashControllerEquip>()
+                              //                 .configModel!
+                              //                 .toggleVegNonVeg!))
+                              //     ? Container(
+                              //         padding:   EdgeInsets.symmetric(
+                              //             vertical:
+                              //                 Dimensions.paddingSizeExtraSmall,
+                              //             horizontal:
+                              //                 Dimensions.paddingSizeSmall),
+                              //         decoration: BoxDecoration(
+                              //           borderRadius: BorderRadius.circular(
+                              //               Dimensions.radiusSmall),
+                              //           color: Theme.of(context)
+                              //               .primaryColor
+                              //               .withOpacity(0.1),
+                              //         ),
+                              //         child: Text(
+                              //           Get.find<EQSplashControllerEquip>()
+                              //                   .configModel!
+                              //                   .moduleConfig!
+                              //                   .module!
+                              //                   .unit!
+                              //               ? item!.unitType ?? ''
+                              //               : item!.veg == 0
+                              //                   ? 'non_veg'.tr
+                              //                   : 'veg'.tr,
+                              //           style: robotoRegular.copyWith(
+                              //               fontSize:
+                              //                   Dimensions.fontSizeExtraSmall,
+                              //               color:
+                              //                   Theme.of(context).primaryColor),
+                              //         ),
+                              //       )
+                              //     : const SizedBox(),
                               const SizedBox(
                                   height: Dimensions.paddingSizeDefault),
                               Container(
