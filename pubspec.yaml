@@ -86,12 +86,12 @@ dependencies:
   fluttercontactpicker: ^4.7.0
 
   #payment dependency
-  flutter_stripe: ^9.5.0+1
+#  flutter_stripe: ^9.5.0+1
   mercadopago_sdk: ^1.3.0
   flutterwave_standard: ^1.0.7
-  paytm_allinonesdk: ^1.2.2
-  razorpay_flutter:
-  flutter_paypal_native: ^2.0.1
+#  paytm_allinonesdk: ^1.2.2
+#  razorpay_flutter:
+#  flutter_paypal_native: ^2.0.1
 
 
 

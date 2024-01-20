@@ -25,20 +25,20 @@ import 'package:customer/custom_ride/themes/app_colors.dart';
 import 'package:customer/custom_ride/utils/fire_store_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_paypal_native/flutter_paypal_native.dart';
-import 'package:flutter_paypal_native/models/custom/currency_code.dart';
-import 'package:flutter_paypal_native/models/custom/environment.dart';
-import 'package:flutter_paypal_native/models/custom/order_callback.dart';
-import 'package:flutter_paypal_native/models/custom/purchase_unit.dart';
-import 'package:flutter_paypal_native/models/custom/user_action.dart';
-import 'package:flutter_paypal_native/str_helper.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+// import 'package:flutter_paypal_native/flutter_paypal_native.dart';
+// import 'package:flutter_paypal_native/models/custom/currency_code.dart';
+// import 'package:flutter_paypal_native/models/custom/environment.dart';
+// import 'package:flutter_paypal_native/models/custom/order_callback.dart';
+// import 'package:flutter_paypal_native/models/custom/purchase_unit.dart';
+// import 'package:flutter_paypal_native/models/custom/user_action.dart';
+// import 'package:flutter_paypal_native/str_helper.dart';
+// import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutterwave_standard/flutterwave.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mercadopago_sdk/mercadopago_sdk.dart';
-import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
+// import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
+// import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class IntercityPaymentOrderController extends GetxController {
   RxBool isLoading = true.obs;
@@ -47,7 +47,7 @@ class IntercityPaymentOrderController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     getArgument();
-    getPaymentData();
+    // getPaymentData();
     super.onInit();
   }
 
@@ -67,39 +67,39 @@ class IntercityPaymentOrderController extends GetxController {
 
   RxString selectedPaymentMethod = "".obs;
 
-  getPaymentData() async {
-    await FireStoreUtils().getPayment().then((value) {
-      if (value != null) {
-        paymentModel.value = value;
-
-        Stripe.publishableKey = paymentModel.value.strip!.clientpublishableKey.toString();
-        Stripe.merchantIdentifier = 'Logista';
-        Stripe.instance.applySettings();
-        setRef();
-        selectedPaymentMethod.value = orderModel.value.paymentType.toString();
-
-        razorPay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
-        razorPay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWaller);
-        razorPay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
-      }
-    });
-
-    await FireStoreUtils.getUserProfile(FireStoreUtils.getCurrentUid()).then((value) {
-      if (value != null) {
-        userModel.value = value;
-      }
-    });
-
-    await FireStoreUtils.getDriver(orderModel.value.driverId.toString()).then((value) {
-      if (value != null) {
-        driverUserModel.value = value;
-      }
-    });
-    initPayPal();
-
-    isLoading.value = false;
-    update();
-  }
+  // getPaymentData() async {
+  //   await FireStoreUtils().getPayment().then((value) {
+  //     if (value != null) {
+  //       paymentModel.value = value;
+  //
+  //       Stripe.publishableKey = paymentModel.value.strip!.clientpublishableKey.toString();
+  //       Stripe.merchantIdentifier = 'Logista';
+  //       Stripe.instance.applySettings();
+  //       setRef();
+  //       selectedPaymentMethod.value = orderModel.value.paymentType.toString();
+  //
+  //       razorPay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+  //       razorPay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWaller);
+  //       razorPay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+  //     }
+  //   });
+  //
+  //   await FireStoreUtils.getUserProfile(FireStoreUtils.getCurrentUid()).then((value) {
+  //     if (value != null) {
+  //       userModel.value = value;
+  //     }
+  //   });
+  //
+  //   await FireStoreUtils.getDriver(orderModel.value.driverId.toString()).then((value) {
+  //     if (value != null) {
+  //       driverUserModel.value = value;
+  //     }
+  //   });
+  //   initPayPal();
+  //
+  //   isLoading.value = false;
+  //   update();
+  // }
 
   completeOrder() async {
     ShowToastDialog.showLoader("Please wait..");
@@ -204,54 +204,54 @@ class IntercityPaymentOrderController extends GetxController {
 
   // Strip
   Future<void> stripeMakePayment({required String amount}) async {
-    log(double.parse(amount).toStringAsFixed(0));
-    try {
-      Map<String, dynamic>? paymentIntentData = await createStripeIntent(amount: amount);
-      if (paymentIntentData!.containsKey("error")) {
-        Get.back();
-        ShowToastDialog.showToast("Something went wrong, please contact admin.");
-      } else {
-        await Stripe.instance.initPaymentSheet(
-            paymentSheetParameters: SetupPaymentSheetParameters(
-                paymentIntentClientSecret: paymentIntentData['client_secret'],
-                allowsDelayedPaymentMethods: false,
-                googlePay: const PaymentSheetGooglePay(
-                  merchantCountryCode: 'US',
-                  testEnv: true,
-                  currencyCode: "USD",
-                ),
-                style: ThemeMode.system,
-                appearance: const PaymentSheetAppearance(
-                  colors: PaymentSheetAppearanceColors(
-                    primary: AppColors.primary,
-                  ),
-                ),
-                merchantDisplayName: 'Logista'));
-        displayStripePaymentSheet(amount: amount);
-      }
-    } catch (e, s) {
-      log("$e \n$s");
-      ShowToastDialog.showToast("exception:$e \n$s");
-    }
+    // log(double.parse(amount).toStringAsFixed(0));
+    // try {
+    //   Map<String, dynamic>? paymentIntentData = await createStripeIntent(amount: amount);
+    //   if (paymentIntentData!.containsKey("error")) {
+    //     Get.back();
+    //     ShowToastDialog.showToast("Something went wrong, please contact admin.");
+    //   } else {
+    //     await Stripe.instance.initPaymentSheet(
+    //         paymentSheetParameters: SetupPaymentSheetParameters(
+    //             paymentIntentClientSecret: paymentIntentData['client_secret'],
+    //             allowsDelayedPaymentMethods: false,
+    //             googlePay: const PaymentSheetGooglePay(
+    //               merchantCountryCode: 'US',
+    //               testEnv: true,
+    //               currencyCode: "USD",
+    //             ),
+    //             style: ThemeMode.system,
+    //             appearance: const PaymentSheetAppearance(
+    //               colors: PaymentSheetAppearanceColors(
+    //                 primary: AppColors.primary,
+    //               ),
+    //             ),
+    //             merchantDisplayName: 'Logista'));
+    //     displayStripePaymentSheet(amount: amount);
+    //   }
+    // } catch (e, s) {
+    //   log("$e \n$s");
+    //   ShowToastDialog.showToast("exception:$e \n$s");
+    // }
   }
 
   displayStripePaymentSheet({required String amount}) async {
-    try {
-      await Stripe.instance.presentPaymentSheet().then((value) {
-        Get.back();
-        ShowToastDialog.showToast("Payment successfully");
-        completeOrder();
-      });
-    } on StripeException catch (e) {
-      Get.back();
-      var lo1 = jsonEncode(e);
-      var lo2 = jsonDecode(lo1);
-      StripePayFailedModel lom = StripePayFailedModel.fromJson(lo2);
-      ShowToastDialog.showToast(lom.error.message);
-    } catch (e) {
-      Get.back();
-      ShowToastDialog.showToast(e.toString());
-    }
+    // try {
+    //   await Stripe.instance.presentPaymentSheet().then((value) {
+    //     Get.back();
+    //     ShowToastDialog.showToast("Payment successfully");
+    //     completeOrder();
+    //   });
+    // } on StripeException catch (e) {
+    //   Get.back();
+    //   var lo1 = jsonEncode(e);
+    //   var lo2 = jsonDecode(lo1);
+    //   StripePayFailedModel lom = StripePayFailedModel.fromJson(lo2);
+    //   ShowToastDialog.showToast(lom.error.message);
+    // } catch (e) {
+    //   Get.back();
+    //   ShowToastDialog.showToast(e.toString());
+    // }
   }
 
   createStripeIntent({required String amount}) async {
@@ -319,70 +319,70 @@ class IntercityPaymentOrderController extends GetxController {
   }
 
   //paypal
-  final _flutterPaypalNativePlugin = FlutterPaypalNative.instance;
+  // final _flutterPaypalNativePlugin = FlutterPaypalNative.instance;
 
-  void initPayPal() async {
-    //set debugMode for error logging
-    FlutterPaypalNative.isDebugMode = paymentModel.value.paypal!.isSandbox == true ? true : false;
+  // void initPayPal() async {
+  //   //set debugMode for error logging
+  //   FlutterPaypalNative.isDebugMode = paymentModel.value.paypal!.isSandbox == true ? true : false;
+  //
+  //   //initiate payPal plugin
+  //   await _flutterPaypalNativePlugin.init(
+  //     //your app id !!! No Underscore!!! see readme.md for help
+  //     returnUrl: "com.parkme://paypalpay",
+  //     //client id from developer dashboard
+  //     clientID: paymentModel.value.paypal!.paypalClient.toString(),
+  //     //sandbox, staging, live etc
+  //     payPalEnvironment: paymentModel.value.paypal!.isSandbox == true ? FPayPalEnvironment.sandbox : FPayPalEnvironment.live,
+  //     //what currency do you plan to use? default is US dollars
+  //     currencyCode: FPayPalCurrencyCode.usd,
+  //     //action paynow?
+  //     action: FPayPalUserAction.payNow,
+  //   );
+  //
+  //   //call backs for payment
+  //   _flutterPaypalNativePlugin.setPayPalOrderCallback(
+  //     callback: FPayPalOrderCallback(
+  //       onCancel: () {
+  //         //user canceled the payment
+  //         ShowToastDialog.showToast("Payment canceled");
+  //       },
+  //       onSuccess: (data) {
+  //         //successfully paid
+  //         //remove all items from queue
+  //         // _flutterPaypalNativePlugin.removeAllPurchaseItems();
+  //         ShowToastDialog.showToast("Payment Successful!!");
+  //         completeOrder();
+  //       },
+  //       onError: (data) {
+  //         //an error occured
+  //         ShowToastDialog.showToast("error: ${data.reason}");
+  //       },
+  //       onShippingChange: (data) {
+  //         //the user updated the shipping address
+  //         ShowToastDialog.showToast("shipping change: ${data.shippingChangeAddress?.adminArea1 ?? ""}");
+  //       },
+  //     ),
+  //   );
+  // }
 
-    //initiate payPal plugin
-    await _flutterPaypalNativePlugin.init(
-      //your app id !!! No Underscore!!! see readme.md for help
-      returnUrl: "com.parkme://paypalpay",
-      //client id from developer dashboard
-      clientID: paymentModel.value.paypal!.paypalClient.toString(),
-      //sandbox, staging, live etc
-      payPalEnvironment: paymentModel.value.paypal!.isSandbox == true ? FPayPalEnvironment.sandbox : FPayPalEnvironment.live,
-      //what currency do you plan to use? default is US dollars
-      currencyCode: FPayPalCurrencyCode.usd,
-      //action paynow?
-      action: FPayPalUserAction.payNow,
-    );
-
-    //call backs for payment
-    _flutterPaypalNativePlugin.setPayPalOrderCallback(
-      callback: FPayPalOrderCallback(
-        onCancel: () {
-          //user canceled the payment
-          ShowToastDialog.showToast("Payment canceled");
-        },
-        onSuccess: (data) {
-          //successfully paid
-          //remove all items from queue
-          // _flutterPaypalNativePlugin.removeAllPurchaseItems();
-          ShowToastDialog.showToast("Payment Successful!!");
-          completeOrder();
-        },
-        onError: (data) {
-          //an error occured
-          ShowToastDialog.showToast("error: ${data.reason}");
-        },
-        onShippingChange: (data) {
-          //the user updated the shipping address
-          ShowToastDialog.showToast("shipping change: ${data.shippingChangeAddress?.adminArea1 ?? ""}");
-        },
-      ),
-    );
-  }
-
-  paypalPaymentSheet(String amount) {
-    //add 1 item to cart. Max is 4!
-    if (_flutterPaypalNativePlugin.canAddMorePurchaseUnit) {
-      _flutterPaypalNativePlugin.addPurchaseUnit(
-        FPayPalPurchaseUnit(
-          // random prices
-          amount: double.parse(amount),
-
-          ///please use your own algorithm for referenceId. Maybe ProductID?
-          referenceId: FPayPalStrHelper.getRandomString(16),
-        ),
-      );
-    }
-    // initPayPal();
-    _flutterPaypalNativePlugin.makeOrder(
-      action: FPayPalUserAction.payNow,
-    );
-  }
+  // paypalPaymentSheet(String amount) {
+  //   //add 1 item to cart. Max is 4!
+  //   if (_flutterPaypalNativePlugin.canAddMorePurchaseUnit) {
+  //     _flutterPaypalNativePlugin.addPurchaseUnit(
+  //       FPayPalPurchaseUnit(
+  //         // random prices
+  //         amount: double.parse(amount),
+  //
+  //         ///please use your own algorithm for referenceId. Maybe ProductID?
+  //         referenceId: FPayPalStrHelper.getRandomString(16),
+  //       ),
+  //     );
+  //   }
+  //   // initPayPal();
+  //   _flutterPaypalNativePlugin.makeOrder(
+  //     action: FPayPalUserAction.payNow,
+  //   );
+  // }
 
 
   ///PayStack Payment Method
@@ -466,166 +466,166 @@ class IntercityPaymentOrderController extends GetxController {
   }
 
   ///Paytm payment function
-  getPaytmCheckSum(context, {required double amount}) async {
-    final String orderId = DateTime.now().millisecondsSinceEpoch.toString();
-    String getChecksum = "${Constant.globalUrl}payments/getpaytmchecksum";
+  // getPaytmCheckSum(context, {required double amount}) async {
+  //   final String orderId = DateTime.now().millisecondsSinceEpoch.toString();
+  //   String getChecksum = "${Constant.globalUrl}payments/getpaytmchecksum";
+  //
+  //   final response = await http.post(
+  //       Uri.parse(
+  //         getChecksum,
+  //       ),
+  //       headers: {},
+  //       body: {
+  //         "mid": paymentModel.value.paytm!.paytmMID.toString(),
+  //         "order_id": orderId,
+  //         "key_secret": paymentModel.value.paytm!.merchantKey.toString(),
+  //       });
+  //
+  //   final data = jsonDecode(response.body);
+  //   print(paymentModel.value.paytm!.paytmMID.toString());
+  //
+  //   await verifyCheckSum(checkSum: data["code"], amount: amount, orderId: orderId).then((value) {
+  //     initiatePayment(amount: amount, orderId: orderId).then((value) {
+  //       String callback = "";
+  //       if (paymentModel.value.paytm!.isSandbox == true) {
+  //         callback = "${callback}https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=$orderId";
+  //       } else {
+  //         callback = "${callback}https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=$orderId";
+  //       }
+  //
+  //       if (value == null) {
+  //         ShowToastDialog.showToast("Payment Failed");
+  //       } else {
+  //         GetPaymentTxtTokenModel result = value;
+  //         startTransaction(context, txnTokenBy: result.body.txnToken, orderId: orderId, amount: amount, callBackURL: callback, isStaging: paymentModel.value.paytm!.isSandbox);
+  //       }
+  //     });
+  //   });
+  // }
 
-    final response = await http.post(
-        Uri.parse(
-          getChecksum,
-        ),
-        headers: {},
-        body: {
-          "mid": paymentModel.value.paytm!.paytmMID.toString(),
-          "order_id": orderId,
-          "key_secret": paymentModel.value.paytm!.merchantKey.toString(),
-        });
+  // Future<void> startTransaction(context, {required String txnTokenBy, required orderId, required double amount, required callBackURL, required isStaging}) async {
+  //   try {
+  //     var response = AllInOneSdk.startTransaction(
+  //       paymentModel.value.paytm!.paytmMID.toString(),
+  //       orderId,
+  //       amount.toString(),
+  //       txnTokenBy,
+  //       callBackURL,
+  //       isStaging,
+  //       true,
+  //       true,
+  //     );
+  //
+  //     response.then((value) {
+  //       if (value!["RESPMSG"] == "Txn Success") {
+  //         print("txt done!!");
+  //         ShowToastDialog.showToast("Payment Successful!!");
+  //         completeOrder();
+  //       }
+  //     }).catchError((onError) {
+  //       if (onError is PlatformException) {
+  //         Get.back();
+  //
+  //         ShowToastDialog.showToast(onError.message.toString());
+  //       } else {
+  //         print("======>>2");
+  //         Get.back();
+  //         ShowToastDialog.showToast(onError.message.toString());
+  //       }
+  //     });
+  //   } catch (err) {
+  //     Get.back();
+  //     ShowToastDialog.showToast(err.toString());
+  //   }
+  // }
 
-    final data = jsonDecode(response.body);
-    print(paymentModel.value.paytm!.paytmMID.toString());
+  // Future verifyCheckSum({required String checkSum, required double amount, required orderId}) async {
+  //   String getChecksum = "${Constant.globalUrl}payments/validatechecksum";
+  //   final response = await http.post(
+  //       Uri.parse(
+  //         getChecksum,
+  //       ),
+  //       headers: {},
+  //       body: {
+  //         "mid": paymentModel.value.paytm!.paytmMID.toString(),
+  //         "order_id": orderId,
+  //         "key_secret": paymentModel.value.paytm!.merchantKey.toString(),
+  //         "checksum_value": checkSum,
+  //       });
+  //   final data = jsonDecode(response.body);
+  //   return data['status'];
+  // }
 
-    await verifyCheckSum(checkSum: data["code"], amount: amount, orderId: orderId).then((value) {
-      initiatePayment(amount: amount, orderId: orderId).then((value) {
-        String callback = "";
-        if (paymentModel.value.paytm!.isSandbox == true) {
-          callback = "${callback}https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=$orderId";
-        } else {
-          callback = "${callback}https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=$orderId";
-        }
-
-        if (value == null) {
-          ShowToastDialog.showToast("Payment Failed");
-        } else {
-          GetPaymentTxtTokenModel result = value;
-          startTransaction(context, txnTokenBy: result.body.txnToken, orderId: orderId, amount: amount, callBackURL: callback, isStaging: paymentModel.value.paytm!.isSandbox);
-        }
-      });
-    });
-  }
-
-  Future<void> startTransaction(context, {required String txnTokenBy, required orderId, required double amount, required callBackURL, required isStaging}) async {
-    try {
-      var response = AllInOneSdk.startTransaction(
-        paymentModel.value.paytm!.paytmMID.toString(),
-        orderId,
-        amount.toString(),
-        txnTokenBy,
-        callBackURL,
-        isStaging,
-        true,
-        true,
-      );
-
-      response.then((value) {
-        if (value!["RESPMSG"] == "Txn Success") {
-          print("txt done!!");
-          ShowToastDialog.showToast("Payment Successful!!");
-          completeOrder();
-        }
-      }).catchError((onError) {
-        if (onError is PlatformException) {
-          Get.back();
-
-          ShowToastDialog.showToast(onError.message.toString());
-        } else {
-          print("======>>2");
-          Get.back();
-          ShowToastDialog.showToast(onError.message.toString());
-        }
-      });
-    } catch (err) {
-      Get.back();
-      ShowToastDialog.showToast(err.toString());
-    }
-  }
-
-  Future verifyCheckSum({required String checkSum, required double amount, required orderId}) async {
-    String getChecksum = "${Constant.globalUrl}payments/validatechecksum";
-    final response = await http.post(
-        Uri.parse(
-          getChecksum,
-        ),
-        headers: {},
-        body: {
-          "mid": paymentModel.value.paytm!.paytmMID.toString(),
-          "order_id": orderId,
-          "key_secret": paymentModel.value.paytm!.merchantKey.toString(),
-          "checksum_value": checkSum,
-        });
-    final data = jsonDecode(response.body);
-    return data['status'];
-  }
-
-  Future<GetPaymentTxtTokenModel> initiatePayment({required double amount, required orderId}) async {
-    String initiateURL = "${Constant.globalUrl}payments/initiatepaytmpayment";
-    String callback = "";
-    if (paymentModel.value.paytm!.isSandbox == true) {
-      callback = "${callback}https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=$orderId";
-    } else {
-      callback = "${callback}https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=$orderId";
-    }
-    final response = await http.post(Uri.parse(initiateURL), headers: {}, body: {
-      "mid": paymentModel.value.paytm!.paytmMID,
-      "order_id": orderId,
-      "key_secret": paymentModel.value.paytm!.merchantKey,
-      "amount": amount.toString(),
-      "currency": "INR",
-      "callback_url": callback,
-      "custId": FireStoreUtils.getCurrentUid(),
-      "issandbox": paymentModel.value.paytm!.isSandbox == true ? "1" : "2",
-    });
-    print(response.body);
-    final data = jsonDecode(response.body);
-    if (data["body"]["txnToken"] == null || data["body"]["txnToken"].toString().isEmpty) {
-      Get.back();
-      ShowToastDialog.showToast("something went wrong, please contact admin.");
-    }
-    return GetPaymentTxtTokenModel.fromJson(data);
+  // Future<GetPaymentTxtTokenModel> initiatePayment({required double amount, required orderId}) async {
+    // String initiateURL = "${Constant.globalUrl}payments/initiatepaytmpayment";
+    // String callback = "";
+    // if (paymentModel.value.paytm!.isSandbox == true) {
+    //   callback = "${callback}https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=$orderId";
+    // } else {
+    //   callback = "${callback}https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=$orderId";
+    // }
+    // final response = await http.post(Uri.parse(initiateURL), headers: {}, body: {
+    //   "mid": paymentModel.value.paytm!.paytmMID,
+    //   "order_id": orderId,
+    //   "key_secret": paymentModel.value.paytm!.merchantKey,
+    //   "amount": amount.toString(),
+    //   "currency": "INR",
+    //   "callback_url": callback,
+    //   "custId": FireStoreUtils.getCurrentUid(),
+    //   "issandbox": paymentModel.value.paytm!.isSandbox == true ? "1" : "2",
+    // });
+    // print(response.body);
+    // final data = jsonDecode(response.body);
+    // if (data["body"]["txnToken"] == null || data["body"]["txnToken"].toString().isEmpty) {
+    //   Get.back();
+    //   ShowToastDialog.showToast("something went wrong, please contact admin.");
+    // }
+    // return GetPaymentTxtTokenModel.fromJson(data);
   }
 
   ///RazorPay payment function
-  final Razorpay razorPay = Razorpay();
+  // final Razorpay razorPay = Razorpay();
 
-  void openCheckout({required amount, required orderId}) async {
-    var options = {
-      'key': paymentModel.value.razorpay!.razorpayKey,
-      'amount': amount * 100,
-      'name': 'Logista',
-      'order_id': orderId,
-      "currency": "INR",
-      'description': 'wallet Topup',
-      'retry': {'enabled': true, 'max_count': 1},
-      'send_sms_hash': true,
-      'prefill': {
-        'contact': userModel.value.phoneNumber,
-        'email': userModel.value.email,
-      },
-      'external': {
-        'wallets': ['paytm']
-      }
-    };
+  // void openCheckout({required amount, required orderId}) async {
+  //   var options = {
+  //     'key': paymentModel.value.razorpay!.razorpayKey,
+  //     'amount': amount * 100,
+  //     'name': 'Logista',
+  //     'order_id': orderId,
+  //     "currency": "INR",
+  //     'description': 'wallet Topup',
+  //     'retry': {'enabled': true, 'max_count': 1},
+  //     'send_sms_hash': true,
+  //     'prefill': {
+  //       'contact': userModel.value.phoneNumber,
+  //       'email': userModel.value.email,
+  //     },
+  //     'external': {
+  //       'wallets': ['paytm']
+  //     }
+  //   };
+  //
+  //   // try {
+  //   //   razorPay.open(options);
+  //   // } catch (e) {
+  //   //   debugPrint('Error: $e');
+  //   // }
+  // }
+  //
+  // void handlePaymentSuccess(PaymentSuccessResponse response) {
+  //   Get.back();
+  //   ShowToastDialog.showToast("Payment Successful!!");
+  //   completeOrder();
+  // }
 
-    try {
-      razorPay.open(options);
-    } catch (e) {
-      debugPrint('Error: $e');
-    }
-  }
+  // void handleExternalWaller(ExternalWalletResponse response) {
+  //   Get.back();
+  //   ShowToastDialog.showToast("Payment Processing!! via");
+  // }
 
-  void handlePaymentSuccess(PaymentSuccessResponse response) {
-    Get.back();
-    ShowToastDialog.showToast("Payment Successful!!");
-    completeOrder();
-  }
-
-  void handleExternalWaller(ExternalWalletResponse response) {
-    Get.back();
-    ShowToastDialog.showToast("Payment Processing!! via");
-  }
-
-  void handlePaymentError(PaymentFailureResponse response) {
-    Get.back();
-    RazorPayFailedModel lom = RazorPayFailedModel.fromJson(jsonDecode(response.message!.toString()));
-    ShowToastDialog.showToast("Payment Failed!!");
-  }
-}
+  // void handlePaymentError(PaymentFailureResponse response) {
+  //   Get.back();
+  //   RazorPayFailedModel lom = RazorPayFailedModel.fromJson(jsonDecode(response.message!.toString()));
+  //   ShowToastDialog.showToast("Payment Failed!!");
+  // }
+// }

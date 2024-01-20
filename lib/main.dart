@@ -48,8 +48,8 @@ FlutterLocalNotificationsPlugin();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    name: 'name-here',
-    options: DefaultFirebaseOptions.currentPlatform,
+    // name: 'name-here',
+    // options: DefaultFirebaseOptions.currentPlatform,
   );
   await Preferences.initPref();
 

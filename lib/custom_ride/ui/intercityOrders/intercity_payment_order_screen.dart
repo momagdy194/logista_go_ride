@@ -1115,7 +1115,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                           if (controller.selectedPaymentMethod.value == controller.paymentModel.value.strip!.name) {
                             controller.stripeMakePayment(amount: controller.calculateAmount().toStringAsFixed(Constant.currencyModel!.decimalDigits!));
                           } else if (controller.selectedPaymentMethod.value == controller.paymentModel.value.paypal!.name) {
-                            controller.paypalPaymentSheet(controller.calculateAmount().toStringAsFixed(Constant.currencyModel!.decimalDigits!));
+                            // controller.paypalPaymentSheet(controller.calculateAmount().toStringAsFixed(Constant.currencyModel!.decimalDigits!));
                           } else if (controller.selectedPaymentMethod.value == controller.paymentModel.value.payStack!.name) {
                             controller.payStackPayment(controller.calculateAmount().toStringAsFixed(Constant.currencyModel!.decimalDigits!));
                           } else if (controller.selectedPaymentMethod.value == controller.paymentModel.value.mercadoPago!.name) {
@@ -1125,7 +1125,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                           } else if (controller.selectedPaymentMethod.value == controller.paymentModel.value.payfast!.name) {
                             controller.payFastPayment(context: context, amount: controller.calculateAmount().toStringAsFixed(Constant.currencyModel!.decimalDigits!));
                           } else if (controller.selectedPaymentMethod.value == controller.paymentModel.value.paytm!.name) {
-                            controller.getPaytmCheckSum(context, amount: controller.calculateAmount());
+                            // controller.getPaytmCheckSum(context, amount: controller.calculateAmount());
                           } else if (controller.selectedPaymentMethod.value == controller.paymentModel.value.razorpay!.name) {
                             RazorPayController().createOrderRazorPay(amount: controller.calculateAmount().toInt(), razorpayModel: controller.paymentModel.value.razorpay).then((value) {
                               if (value == null) {
@@ -1133,7 +1133,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                 ShowToastDialog.showToast("Something went wrong, please contact admin.".tr);
                               } else {
                                 CreateRazorPayOrderModel result = value;
-                                controller.openCheckout(amount: controller.calculateAmount().toInt(), orderId: result.id);
+                                // controller.openCheckout(amount: controller.calculateAmount().toInt(), orderId: result.id);
                               }
                             });
                           } else if (controller.selectedPaymentMethod.value == controller.paymentModel.value.wallet!.name) {
