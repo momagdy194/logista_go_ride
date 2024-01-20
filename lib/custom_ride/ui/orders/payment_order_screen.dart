@@ -1127,7 +1127,7 @@ class PaymentOrderScreen extends StatelessWidget {
                                 ShowToastDialog.showToast("Something went wrong, please contact admin.".tr);
                               } else {
                                 CreateRazorPayOrderModel result = value;
-                                controller.openCheckout(amount: controller.calculateAmount().toInt(), orderId: result.id);
+                                // controller.openCheckout(amount: controller.calculateAmount().toInt(), orderId: result.id);
                               }
                             });
                           } else if (controller.selectedPaymentMethod.value == controller.paymentModel.value.wallet!.name) {

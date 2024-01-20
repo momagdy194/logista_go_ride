@@ -321,14 +321,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.6"
-  eventify:
-    dependency: transitive
-    description:
-      name: eventify
-      sha256: b829429f08586cc2001c628e7499e3e3c2493a1d895fd73b00ecb23351aa5a66
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   expandable_bottom_sheet:
     dependency: "direct main"
     description:
@@ -662,14 +654,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0+1"
-  flutter_paypal_native:
-    dependency: "direct main"
-    description:
-      name: flutter_paypal_native
-      sha256: "67e3fad55bcbbad9e04c6ac7f9a6afac48ea90bd5755cc9e0dcace68a7917a27"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -742,14 +726,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.2.0"
-  flutter_stripe:
-    dependency: "direct main"
-    description:
-      name: flutter_stripe
-      sha256: "7ad314650f6b794e7006a6f906ddbde548fff4e4cff7ad618452728c6b895d1e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.5.0+1"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -816,14 +792,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.7"
-  freezed_annotation:
-    dependency: transitive
-    description:
-      name: freezed_annotation
-      sha256: aeac15850ef1b38ee368d4c53ba9a847e900bb2c53a4db3f6881cbb3cb684338
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
   frontend_server_client:
     dependency: transitive
     description:
@@ -1472,14 +1440,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
-  paytm_allinonesdk:
-    dependency: "direct main"
-    description:
-      name: paytm_allinonesdk
-      sha256: "970eb30ddd3a3d7a27131cdfd72c812d7e2ca2afd9747d690d96e60e5944f168"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.2"
   petitparser:
     dependency: transitive
     description:
@@ -1600,14 +1560,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.1"
-  razorpay_flutter:
-    dependency: "direct main"
-    description:
-      name: razorpay_flutter
-      sha256: "0d8b5241bdc7d8365a6d92e0d86efd1c69cf102b9dab5b723e2be983edaa1596"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.0"
   responsive_framework:
     dependency: "direct main"
     description:
@@ -1861,30 +1813,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  stripe_android:
-    dependency: transitive
-    description:
-      name: stripe_android
-      sha256: c3a4398a777e4378bbc528e7244a73bcd3e6c6d807fce5bb8bcabc21d31abe8c
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.5.0+1"
-  stripe_ios:
-    dependency: transitive
-    description:
-      name: stripe_ios
-      sha256: "2756ea9bb3ced403bb7bd97b8bfd3ff2d44e481d613f6150fedb38f70947af11"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.5.0+1"
-  stripe_platform_interface:
-    dependency: transitive
-    description:
-      name: stripe_platform_interface
-      sha256: "078142b37e3b7a40f7f9f30428bc3fd3234c493b9b4269ae6f298b7fcfa40f33"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.5.0+1"
   synchronized:
     dependency: transitive
     description:
