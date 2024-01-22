@@ -123,6 +123,7 @@ dependencies:
   flutter_share_me: ^1.4.0
   flutter_slidable: ^3.0.0
   custom_map_markers: ^0.0.2+1
+  flutter_launcher_icons: ^0.13.1
   dropdown_search: ^5.0.6
 #  flutter_svg: ^2.0.9
 
@@ -196,3 +197,8 @@ font:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/image/logista_logo.png"
