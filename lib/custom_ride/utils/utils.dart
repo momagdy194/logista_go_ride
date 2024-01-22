@@ -15,6 +15,7 @@ class Utils {
     bool serviceEnabled;
     LocationPermission permission;
 
+
     // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {

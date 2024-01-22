@@ -80,24 +80,34 @@ class DashBoardController extends GetxController {
   RxBool isLoading = true.obs;
 
   getLocation() async {
-    Constant.currentLocation = await Utils.getCurrentLocation();
-    if(Constant.currentLocation != null){
-      List<Placemark> placeMarks = await placemarkFromCoordinates(Constant.currentLocation!.latitude, Constant.currentLocation!.longitude);
-      print("=====>");
-      print(placeMarks.first);
-      Constant.country = placeMarks.first.country;
-      Constant.city = placeMarks.first.locality;
-    }else{
-      await Utils.getCurrentLocation().then((value) async {
-        Constant.currentLocation = value;
+
+    try{
+      Constant.currentLocation = await Utils.getCurrentLocation();
+      if(Constant.currentLocation != null){
         List<Placemark> placeMarks = await placemarkFromCoordinates(Constant.currentLocation!.latitude, Constant.currentLocation!.longitude);
         print("=====>");
         print(placeMarks.first);
         Constant.country = placeMarks.first.country;
         Constant.city = placeMarks.first.locality;
-      });
-    }
+      }else{
+        await Utils.getCurrentLocation().then((value) async {
+          Constant.currentLocation = value;
+          List<Placemark> placeMarks = await placemarkFromCoordinates(Constant.currentLocation!.latitude, Constant.currentLocation!.longitude);
+          print("=====>");
+          print(placeMarks.first);
+          Constant.country = placeMarks.first.country;
+          Constant.city = placeMarks.first.locality;
+        });
+      }
 
+
+    }catch(e){
+
+      print("exc:$e");
+
+
+
+    }
 
     await FireStoreUtils().getTaxList().then((value) {
       if (value != null) {
@@ -121,6 +131,7 @@ class DashBoardController extends GetxController {
     });
 
     isLoading.value = false;
+
   }
 
   RxInt selectedDrawerIndex = 0.obs;
