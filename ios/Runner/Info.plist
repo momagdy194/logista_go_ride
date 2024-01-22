@@ -47,14 +47,14 @@
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs access to camera permission</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location when in the background.</string>
+	<string>This app needs access to location when in the background to find for you the nearby stores.</string>
 	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
 	<dict>
 		<key>YourPurposeKey</key>
-		<string>The example App requires temporary access to the device's precise location.</string>
+		<string>This app requires temporary access to the device's precise location to find for you the nearby stores.</string>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open.</string>
+	<string>This app needs access to location when open to find for you the nearby stores.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app needs access to audio permission.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

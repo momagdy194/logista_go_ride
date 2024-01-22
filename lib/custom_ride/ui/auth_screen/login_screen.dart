@@ -65,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                                   isDense: true,
                                   filled: true,
                                   fillColor: themeChange.getThem() ? AppColors.darkTextField : AppColors.textField,
-                                  contentPadding:   EdgeInsets.symmetric(vertical: 12),
+                                  contentPadding:   const EdgeInsets.symmetric(vertical: 12),
                                   prefixIcon: CountryCodePicker(
                                     onChanged: (value) {
                                       controller.countryCode.value = value.dialCode.toString();

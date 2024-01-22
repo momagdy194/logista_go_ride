@@ -71,23 +71,19 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 return Text(snapshot.error.toString());
                               } else {
                                 UserModel driverModel = snapshot.data!;
-                                return InkWell(
-                                  onTap: () {
-                                    controller.selectedDrawerIndex(8);
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.all(10.0),
-                                    child: ClipOval(
-                                      child: CachedNetworkImage(
-                                        imageUrl:
-                                            driverModel.profilePic.toString(),
-                                        fit: BoxFit.cover,
-                                        placeholder: (context, url) =>
-                                            Constant.loader(),
-                                        errorWidget: (context, url, error) =>
-                                            Image.network(
-                                                Constant.userPlaceHolder),
-                                      ),
+                                //                                  // controller.selectedDrawerIndex(8);
+                                return Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: ClipOval(
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          driverModel.profilePic.toString(),
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) =>
+                                          Constant.loader(),
+                                      errorWidget: (context, url, error) =>
+                                          Image.network(
+                                              Constant.userPlaceHolder),
                                     ),
                                   ),
                                 );
