@@ -1131,10 +1131,9 @@ packages:
   image_compression_flutter:
     dependency: "direct main"
     description:
-      name: image_compression_flutter
-      sha256: "7c14e5fc4f549509585c562cf6477a6405d9db885f391acc42d66906dc43bedb"
-      url: "https://pub.dev"
-    source: hosted
+      path: "/Users/noor/StudioProjects/logista_go_ride/image_compression_flutter-main"
+      relative: false
+    source: path
     version: "1.0.3"
   image_picker:
     dependency: "direct main"
