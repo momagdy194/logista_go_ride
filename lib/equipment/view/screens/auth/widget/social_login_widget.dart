@@ -1,4 +1,3 @@
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:customer/equipment/controller/auth_controller.dart';
 import 'package:customer/equipment/controller/splash_controller.dart';
 import 'package:customer/equipment/data/model/body/social_log_in_body.dart';
@@ -109,28 +108,28 @@ class SocialLoginWidget extends StatelessWidget {
                       !GetPlatform.isWeb
                   ? InkWell(
                       onTap: () async {
-                        final credential =
-                            await SignInWithApple.getAppleIDCredential(
-                          scopes: [
-                            AppleIDAuthorizationScopes.email,
-                            AppleIDAuthorizationScopes.fullName,
-                          ],
-                          webAuthenticationOptions: WebAuthenticationOptions(
-                            clientId: Get.find<EQSplashControllerEquip>()
-                                .configModel!
-                                .appleLogin![0]
-                                .clientId!,
-                            redirectUri: Uri.parse(
-                                'https://motorey-web.6amtech.com/apple'),
-                          ),
-                        );
-                        Get.find<EQAuthController>()
-                            .loginWithSocialMedia(SocialLogInBody(
-                          email: credential.email,
-                          token: credential.authorizationCode,
-                          uniqueId: credential.authorizationCode,
-                          medium: 'apple',
-                        ));
+                        // final credential =
+                        //     await SignInWithApple.getAppleIDCredential(
+                        //   scopes: [
+                        //     AppleIDAuthorizationScopes.email,
+                        //     AppleIDAuthorizationScopes.fullName,
+                        //   ],
+                        //   webAuthenticationOptions: WebAuthenticationOptions(
+                        //     clientId: Get.find<EQSplashControllerEquip>()
+                        //         .configModel!
+                        //         .appleLogin![0]
+                        //         .clientId!,
+                        //     redirectUri: Uri.parse(
+                        //         'https://motorey-web.6amtech.com/apple'),
+                        //   ),
+                        // );
+                        // Get.find<EQAuthController>()
+                        //     .loginWithSocialMedia(SocialLogInBody(
+                        //   email: credential.email,
+                        //   token: credential.authorizationCode,
+                        //   uniqueId: credential.authorizationCode,
+                        //   medium: 'apple',
+                        // ));
                       },
                       child: Container(
                         height: 40,

@@ -108,160 +108,160 @@ class LoginScreen extends StatelessWidget {
                               controller.sendCode();
                             },
                           ),
-                          Padding(
-                            padding:   EdgeInsets.symmetric(horizontal: 10, vertical: 40),
-                            child: Row(
-                              children: [
-                                const Expanded(
-                                    child: Divider(
-                                  height: 1,
-                                )),
-                                Padding(
-                                  padding:   EdgeInsets.symmetric(horizontal: 20),
-                                  child: Text(
-                                    "OR".tr,
-                                    style: GoogleFonts.cairo(fontSize: 16, fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-Expanded(
-                                    child: Divider(
-                                  height: 1,
-                                )),
-                              ],
-                            ),
-                          ),
-                          ButtonThem.buildBorderButton(
-                            context,
-                            title: "Login with google".tr,
-                            iconVisibility: true,
-                            iconAssetImage: 'assets/icons/ic_google.png',
-                            onPress: () async {
-                              ShowToastDialog.showLoader("Please wait".tr);
-                              await controller.signInWithGoogle().then((value) {
-                                ShowToastDialog.closeLoader();
-                                if (value != null) {
-                                  if (value.additionalUserInfo!.isNewUser) {
-                                    print("----->new user");
-                                    UserModel userModel = UserModel();
-                                    userModel.id = value.user!.uid;
-                                    userModel.email = value.user!.email;
-                                    userModel.fullName = value.user!.displayName;
-                                    userModel.profilePic = value.user!.photoURL;
-                                    userModel.loginType = Constant.googleLoginType;
-
-                                    ShowToastDialog.closeLoader();
-                                    Get.to(const InformationScreen(), arguments: {
-                                      "userModel": userModel,
-                                    });
-                                  } else {
-                                    print("----->old user");
-                                    FireStoreUtils.userExitOrNot(value.user!.uid).then((userExit) async {
-                                      ShowToastDialog.closeLoader();
-                                      if (userExit == true) {
-
-
-                                        UserModel? userModel = await FireStoreUtils.getUserProfile(value.user!.uid);
-                                        if (userModel != null) {
-                                          if (userModel.isActive == true) {
-                                            Get.offAll( DashBoardScreen());
-                                          } else {
-                                            await FirebaseAuth.instance.signOut();
-                                            ShowToastDialog.showToast("This user is disable please contact administrator".tr);
-                                          }
-                                        }
-                                      } else {
-                                        UserModel userModel = UserModel();
-                                        userModel.id = value.user!.uid;
-                                        userModel.email = value.user!.email;
-                                        userModel.fullName = value.user!.displayName;
-                                        userModel.profilePic = value.user!.photoURL;
-                                        userModel.loginType = Constant.googleLoginType;
-
-                                        Get.to(const InformationScreen(), arguments: {
-                                          "userModel": userModel,
-                                        });
-                                      }
-                                    });
-                                  }
-                                }
-                              });
-                            },
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          Visibility(
-                              visible: Platform.isIOS,
-                              child: ButtonThem.buildBorderButton(
-                                context,
-                                title: "Login with apple".tr,
-                                iconVisibility: true,
-                                iconAssetImage: 'assets/icons/ic_apple.png',
-                                onPress: () async {
-                                  ShowToastDialog.showLoader("Please wait".tr);
-                                  await controller.signInWithApple().then((value) {
-                                    ShowToastDialog.closeLoader();
-                                    if (value != null) {
-                                      if (value.additionalUserInfo!.isNewUser) {
-                                        log("----->new user");
-                                        UserModel userModel = UserModel();
-                                        userModel.id = value.user!.uid;
-                                        userModel.email = value.user!.email;
-                                        userModel.profilePic = value.user!.photoURL;
-                                        userModel.loginType = Constant.appleLoginType;
-
-                                        ShowToastDialog.closeLoader();
-                                        Get.to(const InformationScreen(), arguments: {
-                                          "userModel": userModel,
-                                        });
-                                      } else {
-                                        print("----->old user");
-                                        FireStoreUtils.userExitOrNot(value.user!.uid).then((userExit) async {
-                                          ShowToastDialog.closeLoader();
-
-                                          if (userExit == true) {
-                                            UserModel? userModel = await FireStoreUtils.getUserProfile(value.user!.uid);
-                                            if (userModel != null) {
-                                              if (userModel.isActive == true) {
-                                                await Get.find<EQAuthController>().login(
-                                                    "${userModel.countryCode}${userModel.phoneNumber}",
-                                                 "${ userModel.phoneNumber}"
-                                                    // SignUpBody(email:"${userModel.email}",password:userModel.phoneNumber,fName: userModel.fullName,lName: "." ,phone:"${userModel.countryCode}${userModel.phoneNumber}"  )
-                                          ).then((value) {
-                                                  Get.find<EQAuthController>()
-                                                      .saveUserNumberAndPassword(
-                                                      "${userModel.countryCode}${userModel.phoneNumber}",
-                                                      "${userModel.phoneNumber}",
-                                                      "${userModel.countryCode}");
-                                                });
-
-                                                Get.offAll( DashBoardScreen());
-
-
-
-
-                                              } else {
-                                                await FirebaseAuth.instance.signOut();
-                                                ShowToastDialog.showToast("This user is disable please contact administrator".tr);
-                                              }
-                                            }
-                                          } else {
-                                            UserModel userModel = UserModel();
-                                            userModel.id = value.user!.uid;
-                                            userModel.email = value.user!.email;
-                                            userModel.profilePic = value.user!.photoURL;
-                                            userModel.loginType = Constant.googleLoginType;
-
-                                            Get.to(const InformationScreen(), arguments: {
-                                              "userModel": userModel,
-                                            });
-                                          }
-                                        });
-                                      }
-                                    }
-                                  });
-                                },
-                              )),
+//                           Padding(
+//                             padding:   EdgeInsets.symmetric(horizontal: 10, vertical: 40),
+//                             child: Row(
+//                               children: [
+//                                 const Expanded(
+//                                     child: Divider(
+//                                   height: 1,
+//                                 )),
+//                                 Padding(
+//                                   padding:   EdgeInsets.symmetric(horizontal: 20),
+//                                   child: Text(
+//                                     "OR".tr,
+//                                     style: GoogleFonts.cairo(fontSize: 16, fontWeight: FontWeight.w600),
+//                                   ),
+//                                 ),
+// Expanded(
+//                                     child: Divider(
+//                                   height: 1,
+//                                 )),
+//                               ],
+//                             ),
+//                           ),
+                          // ButtonThem.buildBorderButton(
+                          //   context,
+                          //   title: "Login with google".tr,
+                          //   iconVisibility: true,
+                          //   iconAssetImage: 'assets/icons/ic_google.png',
+                          //   onPress: () async {
+                          //     ShowToastDialog.showLoader("Please wait".tr);
+                          //     await controller.signInWithGoogle().then((value) {
+                          //       ShowToastDialog.closeLoader();
+                          //       if (value != null) {
+                          //         if (value.additionalUserInfo!.isNewUser) {
+                          //           print("----->new user");
+                          //           UserModel userModel = UserModel();
+                          //           userModel.id = value.user!.uid;
+                          //           userModel.email = value.user!.email;
+                          //           userModel.fullName = value.user!.displayName;
+                          //           userModel.profilePic = value.user!.photoURL;
+                          //           userModel.loginType = Constant.googleLoginType;
+                          //
+                          //           ShowToastDialog.closeLoader();
+                          //           Get.to(const InformationScreen(), arguments: {
+                          //             "userModel": userModel,
+                          //           });
+                          //         } else {
+                          //           print("----->old user");
+                          //           FireStoreUtils.userExitOrNot(value.user!.uid).then((userExit) async {
+                          //             ShowToastDialog.closeLoader();
+                          //             if (userExit == true) {
+                          //
+                          //
+                          //               UserModel? userModel = await FireStoreUtils.getUserProfile(value.user!.uid);
+                          //               if (userModel != null) {
+                          //                 if (userModel.isActive == true) {
+                          //                   Get.offAll( DashBoardScreen());
+                          //                 } else {
+                          //                   await FirebaseAuth.instance.signOut();
+                          //                   ShowToastDialog.showToast("This user is disable please contact administrator".tr);
+                          //                 }
+                          //               }
+                          //             } else {
+                          //               UserModel userModel = UserModel();
+                          //               userModel.id = value.user!.uid;
+                          //               userModel.email = value.user!.email;
+                          //               userModel.fullName = value.user!.displayName;
+                          //               userModel.profilePic = value.user!.photoURL;
+                          //               userModel.loginType = Constant.googleLoginType;
+                          //
+                          //               Get.to(const InformationScreen(), arguments: {
+                          //                 "userModel": userModel,
+                          //               });
+                          //             }
+                          //           });
+                          //         }
+                          //       }
+                          //     });
+                          //   },
+                          // ),
+                          // const SizedBox(
+                          //   height: 16,
+                          // ),
+                          // Visibility(
+                          //     visible: Platform.isIOS,
+                          //     child: ButtonThem.buildBorderButton(
+                          //       context,
+                          //       title: "Login with apple".tr,
+                          //       iconVisibility: true,
+                          //       iconAssetImage: 'assets/icons/ic_apple.png',
+                          //       onPress: () async {
+                          //         ShowToastDialog.showLoader("Please wait".tr);
+                          //         await controller.signInWithApple().then((value) {
+                          //           ShowToastDialog.closeLoader();
+                          //           if (value != null) {
+                          //             if (value.additionalUserInfo!.isNewUser) {
+                          //               log("----->new user");
+                          //               UserModel userModel = UserModel();
+                          //               userModel.id = value.user!.uid;
+                          //               userModel.email = value.user!.email;
+                          //               userModel.profilePic = value.user!.photoURL;
+                          //               userModel.loginType = Constant.appleLoginType;
+                          //
+                          //               ShowToastDialog.closeLoader();
+                          //               Get.to(const InformationScreen(), arguments: {
+                          //                 "userModel": userModel,
+                          //               });
+                          //             } else {
+                          //               print("----->old user");
+                          //               FireStoreUtils.userExitOrNot(value.user!.uid).then((userExit) async {
+                          //                 ShowToastDialog.closeLoader();
+                          //
+                          //                 if (userExit == true) {
+                          //                   UserModel? userModel = await FireStoreUtils.getUserProfile(value.user!.uid);
+                          //                   if (userModel != null) {
+                          //                     if (userModel.isActive == true) {
+                          //                       await Get.find<EQAuthController>().login(
+                          //                           "${userModel.countryCode}${userModel.phoneNumber}",
+                          //                        "${ userModel.phoneNumber}"
+                          //                           // SignUpBody(email:"${userModel.email}",password:userModel.phoneNumber,fName: userModel.fullName,lName: "." ,phone:"${userModel.countryCode}${userModel.phoneNumber}"  )
+                          //                 ).then((value) {
+                          //                         Get.find<EQAuthController>()
+                          //                             .saveUserNumberAndPassword(
+                          //                             "${userModel.countryCode}${userModel.phoneNumber}",
+                          //                             "${userModel.phoneNumber}",
+                          //                             "${userModel.countryCode}");
+                          //                       });
+                          //
+                          //                       Get.offAll( DashBoardScreen());
+                          //
+                          //
+                          //
+                          //
+                          //                     } else {
+                          //                       await FirebaseAuth.instance.signOut();
+                          //                       ShowToastDialog.showToast("This user is disable please contact administrator".tr);
+                          //                     }
+                          //                   }
+                          //                 } else {
+                          //                   UserModel userModel = UserModel();
+                          //                   userModel.id = value.user!.uid;
+                          //                   userModel.email = value.user!.email;
+                          //                   userModel.profilePic = value.user!.photoURL;
+                          //                   userModel.loginType = Constant.googleLoginType;
+                          //
+                          //                   Get.to(const InformationScreen(), arguments: {
+                          //                     "userModel": userModel,
+                          //                   });
+                          //                 }
+                          //               });
+                          //             }
+                          //           }
+                          //         });
+                          //       },
+                          //     )),
                         ],
                       ),
                     )
