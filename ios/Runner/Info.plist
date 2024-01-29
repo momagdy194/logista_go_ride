@@ -44,10 +44,13 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+
 	<key>NSCameraUsageDescription</key>
-	<string>This app needs access to camera permission</string>
+	<string>This app needs access to camera permission to upload profile picture</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This app needs access to location when in the background to find for you the nearby stores.</string>
+
+
 	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
 	<dict>
 		<key>YourPurposeKey</key>
@@ -55,11 +58,14 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open to find for you the nearby stores.</string>
+
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app needs access to audio permission.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app needs access to your gallery photo.</string>
+	<string>This app needs access to your gallery photo to upload profile picture.</string>
 	<key>SERVER_CLIENT_ID</key>
+
+
 	<string>703618062340-ghqeo2t2cv66e16jth0l72f8kki0aj6d.apps.googleusercontent.com</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
