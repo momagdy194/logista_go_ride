@@ -8,6 +8,86 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:763402725343:android:a36a1139005c0f2f31066a",
+        "android_client_info": {
+          "package_name": "com.logistaDelivery.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763402725343-vbblj55iah5v5r4mns5fu4b83fah92k3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKwdtHBKAVj__MrTaqnWaGgtVXjRJfrqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763402725343-vbblj55iah5v5r4mns5fu4b83fah92k3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "763402725343-6u2o0i7e3440q1qq6ov1tqm5ikq2pnne.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.logistaDelivery.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763402725343:android:023c0457c6d076ff31066a",
+        "android_client_info": {
+          "package_name": "com.logistaseller.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763402725343-2s1ig3go3evf3t0jqj7ib2p09lh5akse.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.logistaseller.app",
+            "certificate_hash": "207714976a7ffdda4e7414ae232826de268c759b"
+          }
+        },
+        {
+          "client_id": "763402725343-vbblj55iah5v5r4mns5fu4b83fah92k3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKwdtHBKAVj__MrTaqnWaGgtVXjRJfrqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763402725343-vbblj55iah5v5r4mns5fu4b83fah92k3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "763402725343-6u2o0i7e3440q1qq6ov1tqm5ikq2pnne.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.logistaDelivery.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:763402725343:android:aa634b655f663ea031066a",
         "android_client_info": {
           "package_name": "com.logistatime.app"
@@ -46,6 +126,13 @@
             {
               "client_id": "763402725343-vbblj55iah5v5r4mns5fu4b83fah92k3.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "763402725343-6u2o0i7e3440q1qq6ov1tqm5ikq2pnne.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.logistaDelivery.app"
+              }
             }
           ]
         }

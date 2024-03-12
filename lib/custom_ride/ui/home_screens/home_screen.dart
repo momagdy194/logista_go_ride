@@ -474,6 +474,7 @@ class HomeScreen extends StatelessWidget {
                                                 // showDialog(context: context, builder: (BuildContext context) => warningDailog());
                                               } else {
                                                 // ShowToastDialog.showLoader("Please wait");
+                                                print("peforeeeepeforeeeepeforeeeepeforeeee");
                                                 OrderModel orderModel = OrderModel();
                                                 orderModel.id = Constant.getUuid();
                                                 orderModel.userId = FireStoreUtils.getCurrentUid();
@@ -484,9 +485,9 @@ class HomeScreen extends StatelessWidget {
                                                 orderModel.distance = controller.distance.value;
                                                 orderModel.distanceType = Constant.distanceType;
                                                 orderModel.offerRate = controller.selectedType.value.offerRate == true ? controller.offerYourRateController.value.text : controller.amount.value;
-                                                orderModel.serviceId = controller.selectedType.value.id;
+                                                orderModel.serviceId = controller.subCategory.value.id;
                                                 GeoFirePoint position =
-                                                    GeoFlutterFire().point(latitude: controller.sourceLocationLAtLng.value.latitude!, longitude: controller.sourceLocationLAtLng.value.longitude!);
+                                                GeoFlutterFire().point(latitude: controller.sourceLocationLAtLng.value.latitude!, longitude: controller.sourceLocationLAtLng.value.longitude!);
 
                                                 orderModel.position = Positions(geoPoint: position.geoPoint, geohash: position.hash);
                                                 orderModel.createdDate = Timestamp.now();
@@ -495,16 +496,27 @@ class HomeScreen extends StatelessWidget {
                                                 orderModel.paymentStatus = false;
                                                 orderModel.service = controller.selectedType.value;
                                                 orderModel.adminCommission =
-                                                    controller.selectedType.value.adminCommission!.isEnabled == false ? controller.selectedType.value.adminCommission! : Constant.adminCommission;
+                                                controller.selectedType.value.adminCommission!.isEnabled == false ? controller.selectedType.value.adminCommission! : Constant.adminCommission;
                                                 orderModel.otp = Constant.getReferralCode();
                                                 orderModel.taxList = Constant.taxList;
+                                                print("peforeeeepeforeeeepeforeeeepeforeeee Myself");
+
                                                 if (controller.selectedTakingRide.value.fullName != "Myself") {
                                                   orderModel.someOneElse = controller.selectedTakingRide.value;
                                                 }
 
+                                                print("peforeeeepeforeeeepeforeeeepeforeeee sendOrderData");
+
                                                 // FireStoreUtils().startStream();
-                                                FireStoreUtils().sendOrderData(orderModel).listen((event) {
+                                                FireStoreUtils().sendOrderData(orderModel).listen((event)
+                                                {
+                                                  print("peforeeeepeforeeeepeforeeeepeforeeee event.forEach");
+                                                  print("peforeeeepeforeeeepeforeeeepeforeeee ${event}");
                                                   event.forEach((element) async {
+
+                                                    print("peforeeeepeforeeeepeforeeeepeforeeee element.fcmToken");
+                                                    print("peforeeeepeforeeeepeforeeeepeforeeee ${element.fcmToken}");
+
                                                     if (element.fcmToken != null) {
                                                       Map<String, dynamic> playLoad = <String, dynamic>{"type": "city_order", "orderId": orderModel.id};
                                                       await SendNotification.sendOneNotification(
@@ -518,7 +530,7 @@ class HomeScreen extends StatelessWidget {
                                                 });
                                                 await FireStoreUtils.setOrder(orderModel).then((value) {
                                                   ShowToastDialog.showToast("Ride Placed successfully".tr);
-                                                  controller.dashboardController.selectedDrawerIndex(1);
+                                                  controller.dashboardController.selectedDrawerIndex(2);
                                                   ShowToastDialog.closeLoader();
                                                 });
                                               }

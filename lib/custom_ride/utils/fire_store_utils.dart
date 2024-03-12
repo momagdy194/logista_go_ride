@@ -50,7 +50,6 @@ class FireStoreUtils {
     await fireStore.collection(CollectionName.settings).doc("globalKey").get().then((value) {
       if (value.exists) {
         Constant.mapAPIKey = value.data()!["googleMapKey"];
-        print("Constant.mapAPIKey ${Constant.mapAPIKey}");
         Constant.serverKey = value.data()!["serverKey"];
       }
     });
@@ -289,7 +288,7 @@ class FireStoreUtils {
     bool isExit = false;
 
     await fireStore.collection(CollectionName.users).doc(uid).get().then(
-      (value) {
+          (value) {
         if (value.exists) {
           isExit = true;
         } else {
@@ -306,32 +305,6 @@ class FireStoreUtils {
   static Future<List<ServiceModel>> getService() async {
     List<ServiceModel> serviceList = [];
     await fireStore.collection(CollectionName.service).where('enable', isEqualTo: true).get().then((value) {
-      for (var element in value.docs) {
-        ServiceModel documentModel = ServiceModel.fromJson(element.data());
-        serviceList.add(documentModel);
-      }
-    }).catchError((error) {
-      log(error.toString());
-    });
-    return serviceList;
-  }
-  
-  static Future<List<ServiceModel>> getServiceMainCategory() async {
-    List<ServiceModel> serviceList = [];
-    await fireStore.collection(CollectionName.service).where('enable', isEqualTo: true).where("main_category",isEqualTo: true).orderBy("sort",descending: false ).get().then((value) {
-      for (var element in value.docs) {
-        ServiceModel documentModel = ServiceModel.fromJson(element.data());
-        serviceList.add(documentModel);
-      }
-    }).catchError((error) {
-      log(error.toString());
-    });
-    return serviceList;
-  }
-
-  static Future<List<ServiceModel>> getServiceSubCategory({required parentCategoryId}) async {
-    List<ServiceModel> serviceList = [];
-    await fireStore.collection(CollectionName.service).where('enable', isEqualTo: true).where("main_category",isEqualTo: false).where("parent_category_id",isEqualTo: parentCategoryId).get().then((value) {
       for (var element in value.docs) {
         ServiceModel documentModel = ServiceModel.fromJson(element.data());
         serviceList.add(documentModel);
@@ -398,7 +371,10 @@ class FireStoreUtils {
     getNearestOrderRequestController ??= StreamController<List<DriverUserModel>>.broadcast();
 
     List<DriverUserModel> ordersList = [];
+    print("orderModel.serviceIdorderModel.serviceId ${orderModel.serviceId}");
     Query query = fireStore.collection(CollectionName.driverUsers).where('serviceId', isEqualTo: orderModel.serviceId).where('isOnline', isEqualTo: true);
+
+  // print("query ${}")
     GeoFirePoint center = GeoFlutterFire().point(latitude: orderModel.sourceLocationLAtLng!.latitude ?? 0.0, longitude: orderModel.sourceLocationLAtLng!.longitude ?? 0.0);
     Stream<List<DocumentSnapshot>> stream = GeoFlutterFire().collection(collectionRef: query).within(center: center, radius: double.parse(Constant.radius), field: 'position', strictMode: true);
 
@@ -488,7 +464,6 @@ class FireStoreUtils {
   Future<CurrencyModel?> getCurrency() async {
     CurrencyModel? currencyModel;
     await fireStore.collection(CollectionName.currency).where("enable", isEqualTo: true).get().then((value) {
-      print("valuevaluevalue ${value}");
       if (value.docs.isNotEmpty) {
         currencyModel = CurrencyModel.fromJson(value.docs.first.data());
       }
@@ -804,4 +779,30 @@ class FireStoreUtils {
     });
     return isFirst;
   }
+  static Future<List<ServiceModel>> getServiceMainCategory() async {
+    List<ServiceModel> serviceList = [];
+    await fireStore.collection(CollectionName.service).where('enable', isEqualTo: true).where("main_category",isEqualTo: true).orderBy("sort",descending: false ).get().then((value) {
+      for (var element in value.docs) {
+        ServiceModel documentModel = ServiceModel.fromJson(element.data());
+        serviceList.add(documentModel);
+      }
+    }).catchError((error) {
+      log(error.toString());
+    });
+    return serviceList;
+  }
+
+  static Future<List<ServiceModel>> getServiceSubCategory({required parentCategoryId}) async {
+    List<ServiceModel> serviceList = [];
+    await fireStore.collection(CollectionName.service).where('enable', isEqualTo: true).where("main_category",isEqualTo: false).where("parent_category_id",isEqualTo: parentCategoryId).get().then((value) {
+      for (var element in value.docs) {
+        ServiceModel documentModel = ServiceModel.fromJson(element.data());
+        serviceList.add(documentModel);
+      }
+    }).catchError((error) {
+      log(error.toString());
+    });
+    return serviceList;
+  }
+
 }

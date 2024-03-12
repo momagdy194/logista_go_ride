@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 class SendNotification {
   static sendOneNotification({required String token, required String title, required String body, required Map<String, dynamic> payload}) async {
-    print(payload);
+    print("payloadpayload ${payload}");
     http.Response response = await http.post(
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
       headers: <String, String>{

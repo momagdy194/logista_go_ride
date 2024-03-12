@@ -113,7 +113,7 @@ dependencies:
   pointer_interceptor: ^0.9.0+1
   phone_number: ^1.0.0
   image_compression_flutter:
-    path: /Users/noor/StudioProjects/logista_go_ride/image_compression_flutter-main
+    path: image_compression_flutter-main
   share_plus: ^6.3.0
   fwfh_text_style: ^2.22.8+1
   expandable_bottom_sheet: ^1.1.1+1
