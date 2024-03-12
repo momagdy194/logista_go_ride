@@ -530,7 +530,7 @@ class HomeScreen extends StatelessWidget {
                                                 });
                                                 await FireStoreUtils.setOrder(orderModel).then((value) {
                                                   ShowToastDialog.showToast("Ride Placed successfully".tr);
-                                                  controller.dashboardController.selectedDrawerIndex(2);
+                                                  controller.dashboardController.selectedDrawerIndex(1);
                                                   ShowToastDialog.closeLoader();
                                                 });
                                               }
